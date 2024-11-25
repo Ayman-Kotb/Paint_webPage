@@ -1,6 +1,6 @@
 import ColorPicker from "../ColorPicker/ColorPicker";
 import "./menuBar.css"
-import Buttons from "./Buttons/Buttons";
+import Buttons from "../Buttons/Buttons";
 
 function MenuBar() {
     return(
