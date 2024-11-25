@@ -1,12 +1,10 @@
-import { useState, useEffect, useRef, useContext} from 'react'
 import { Axios } from 'axios'
-import './App.css'
+import MenuBar from './components/MenuBar/MenuBar.jsx'
 
 function App() {
-
   return (
     <>
-      
+      <MenuBar/>
     </>
   )
 }
