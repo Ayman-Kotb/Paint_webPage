@@ -1,5 +1,5 @@
 class Shape {
-    constructor(options={}){
+    constructor(options){
         this.options = options
     }
     create(){
