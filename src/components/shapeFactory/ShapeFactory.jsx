@@ -14,3 +14,4 @@ shapeFactory = (shape)=>{
             throw new Error(`${shape} is not valid`)
     }
 }
+export default shapeFactory
