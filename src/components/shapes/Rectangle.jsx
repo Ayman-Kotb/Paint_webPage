@@ -4,11 +4,11 @@ import { Rect } from "fabric"
 class Rectangle extends Shape {
     create(){
         return new Rect({
-            top: this.options.top || 100,
-            left: this.options.left || 100,
-            width: this.options.width || 100,
-            height: this.options.height || 50,
-            fill: this.options.fill || "red",
+            top: 100,
+            left: 100,
+            width: 100,
+            height: 50,
+            fill: "red",
         })
     }
 }

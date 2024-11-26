@@ -9,8 +9,8 @@ function MenuBar() {
         <div className="menuBar_container">
             <ColorPicker/>
             <Buttons/>
-            <FreeHand></FreeHand>
-            <SaveLoad></SaveLoad>
+            <FreeHand/>
+            <SaveLoad/>
         </div>
     )
 }
