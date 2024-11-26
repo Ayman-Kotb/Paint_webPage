@@ -15,14 +15,14 @@
     cursor: pointer;
 }
 .colorDisplay_container p {
-    margin: 2px;
+    margin: 2px 22px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 12px;
 }
 .colorDisplay{
     margin: 0px 0px 3px 22px;
-    height: 30px;
-    width: 30px;
+    height: 40px;
+    width: 50px;
     background-color: white;
     border: 1px solid black;
     cursor: pointer;

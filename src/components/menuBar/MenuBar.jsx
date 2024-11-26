@@ -6,7 +6,7 @@ import FreeHand from "../FreeHand/FreeHand.jsx";
 import SaveLoad from "../SaveLoad/SaveLoad.jsx";
 
 function MenuBar({canvas}) {
-    const [color, setColor] = useState("#FFFFFF"); // Manage color state in MenuBar
+    const [color, setColor] = useState("#000000"); // Manage color state in MenuBar
     
     return (
         <div className="menuBar_container">

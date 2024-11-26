@@ -1,3 +1,4 @@
+import ColorDisplay from "./ColorDisplay";
 import "./colorPicker.css";
 
 function ColorPicker({ color, setColor }) {
@@ -15,10 +16,7 @@ function ColorPicker({ color, setColor }) {
                 className="picker"
                 title="Click to choose a color" // Optional: Adding a title for extra information on hover
             />
-            <div className="color-display" style={{ backgroundColor: color }}>
-                {/* Display the currently selected color */}
-                <p>{color}</p>
-            </div>
+            <ColorDisplay color={color} />
         </div>
     );
 }
