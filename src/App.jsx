@@ -1,12 +1,14 @@
 import { Axios } from 'axios'
+import { useRef } from 'react'
 import MenuBar from './components/MenuBar/MenuBar.jsx'
 import CanvasComponent from './components/myCanvas/CanvasComponent.jsx'
 
 function App() {
+  const canvas = useRef(null)
   return (
     <>
-      <MenuBar/>
-      <CanvasComponent/>
+      <MenuBar canvas={canvas}/>
+      <CanvasComponent canvas={canvas}/>
     </>
   )
 }

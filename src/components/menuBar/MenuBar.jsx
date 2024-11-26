@@ -4,11 +4,11 @@ import Buttons from "../Buttons/Buttons.jsx";
 import FreeHand from "../FreeHand/FreeHand.jsx";
 import SaveLoad from "../SaveLoad/SaveLoad.jsx";
 
-function MenuBar() {
+function MenuBar({canvas}) {
     return(
         <div className="menuBar_container">
             <ColorPicker/>
-            <Buttons/>
+            <Buttons canvas={canvas}/>
             <FreeHand/>
             <SaveLoad/>
         </div>

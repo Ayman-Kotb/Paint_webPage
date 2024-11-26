@@ -1,24 +1,23 @@
 
-import {useRef, useState, useEffect} from "react"
+import {useRef, useEffect} from "react"
 import {Canvas} from "fabric"
 import "./CanvasComponent.css"
 
-function CanvasComponent(){
+function CanvasComponent({canvas}){
     const canvasRef = useRef(null)
-    const [canvas, setCanvas] = useState(null)
     useEffect(()=>{
         if(canvasRef.current){
             const startCanvas = new Canvas(canvasRef.current,{
                 height: 450,
                 width: 900,
-            })
-            startCanvas.renderAll()
-            setCanvas(startCanvas)
+            });
+            startCanvas.renderAll();
+            canvas.current = startCanvas;
             return () =>{
-                startCanvas.dispose()
+                startCanvas.dispose();
             }
         }
-    }, [])
+    }, []);
 
     return(
         <canvas ref={canvasRef} className="canvas"/>
