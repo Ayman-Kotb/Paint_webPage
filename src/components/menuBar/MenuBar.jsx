@@ -4,6 +4,8 @@ import "./menuBar.css";
 import Buttons from "../Buttons/Buttons.jsx";
 import FreeHand from "../FreeHand/FreeHand.jsx";
 import SaveLoad from "../SaveLoad/SaveLoad.jsx";
+import Delete from "../Delete/Delete.jsx";
+import UndoRedo from "../UndoRedo/UndoRedo.jsx";
 
 function MenuBar({canvas}) {
     const [color, setColor] = useState("#000000"); // Manage color state in MenuBar
@@ -14,6 +16,8 @@ function MenuBar({canvas}) {
             <Buttons canvas={canvas} color={color} /> {/* Pass the color prop to Buttons */}
             <FreeHand />
             <SaveLoad />
+            <Delete />
+            <UndoRedo />
         </div>
     );
 }

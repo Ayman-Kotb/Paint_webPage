@@ -7,7 +7,7 @@ function ColorPicker({ color, setColor }) {
     }
 
     return (
-        <div className="colorPicker_container">
+        <div className="container">
             <p>Pick a color:</p>
             <input
                 type="color"

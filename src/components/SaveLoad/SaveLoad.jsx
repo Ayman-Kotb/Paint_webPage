@@ -1,10 +1,9 @@
-import "./SaveLoad.css"
 
 function SaveLoad(){
     return(
-      <div className="SaveLoadContainer">
-        <button className="SaveLoad">Save</button>
-        <button className="SaveLoad">Load</button>
+      <div className="container">
+        <button className="button">Save</button>
+        <button className="button">Load</button>
       </div>
     )
 }
