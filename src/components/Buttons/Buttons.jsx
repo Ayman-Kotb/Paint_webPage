@@ -1,10 +1,12 @@
+import shapeFactory from "../shapeFactory/ShapeFactory";
 import "./Buttons.css"
 
 
 function Buttons(){
 
-    const addShape = (typeOfShape) => {
-
+    const addShape = (typeOfShape, ...options) => {
+      const shape = shapeFactory(typeOfShape, ...options);
+      shape.create();
     }
 
 

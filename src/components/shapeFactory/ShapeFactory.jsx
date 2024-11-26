@@ -1,21 +1,23 @@
-import { Circle, Line, Rectangle, Triangle } from "fabric";
+import "../shapes";
 
-shapeFactory = (shape)=>{
-    switch (shape){
-        case "circle":
-            return new Circle()
-        case "line":
-            return new Line()
-        case "rectangle":
-            return new Rectangle()
-        case "triangle":
-            return new Triangle()
-        case "polygon":
-            return new Polygon()
-        case "square":
-            return new Square()
-        default:
-            throw new Error(`${shape} is not valid`)
+class ShapeFactory {
+    createShape(shape,options){
+        switch (shape){
+            case "circle":
+                return new Circle(options)
+            case "line":
+                return new Line(options)
+            case "rectangle":
+                return new Rectangle(options)
+            case "triangle":
+                return new Triangle(options)
+            case "polygon":
+                return new Polygon(options)
+            case "square":
+                return new Square(options)
+            default:
+                throw new Error(`${shape} is not valid`)
+        }
     }
 }
-export default shapeFactory
+export default ShapeFactory
