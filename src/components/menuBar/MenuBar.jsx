@@ -6,6 +6,7 @@ import FreeHand from "../FreeHand/FreeHand.jsx";
 import SaveLoad from "../SaveLoad/SaveLoad.jsx";
 import Delete from "../Delete/Delete.jsx";
 import UndoRedo from "../UndoRedo/UndoRedo.jsx";
+import Copy from "../Copy/Copy.jsx";
 
 function MenuBar({ canvas }) {
     const [color, setColor] = useState("#000000"); // Manage color state in MenuBar
@@ -32,6 +33,7 @@ function MenuBar({ canvas }) {
                 />
                 <span>{size}</span> {/* Display the current brush size */}
             <SaveLoad />
+            <Copy canvas={canvas}/>
             <Delete canvas={canvas} />
             <UndoRedo />
             <div className="sizeInputContainer">

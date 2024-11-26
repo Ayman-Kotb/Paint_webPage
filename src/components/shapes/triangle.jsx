@@ -2,6 +2,7 @@ import { Triangle } from "fabric"
 import Shape from "./Shape"
 
 class myTriangle extends Shape {
+    type= "triangle";
     create(color){
         return new Triangle({
             top: 100,

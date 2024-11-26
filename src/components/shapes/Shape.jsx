@@ -1,5 +1,8 @@
+import { useState } from "react";
 class Shape {
-    create(){
+    type = "shape";
+    create(color){
+
         throw new Error("Method not implemented")
     }
 }
