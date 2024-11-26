@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ColorPicker from "../ColorPicker/ColorPicker";
-import "./menuBar.css";
+import "./MenuBar.css";
 import Buttons from "../Buttons/Buttons.jsx";
 import FreeHand from "../FreeHand/FreeHand.jsx";
 import SaveLoad from "../SaveLoad/SaveLoad.jsx";

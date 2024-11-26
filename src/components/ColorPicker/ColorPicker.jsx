@@ -1,5 +1,5 @@
 import ColorDisplay from "./ColorDisplay";
-import "./colorPicker.css";
+import "./ColorPicker.css";
 
 function ColorPicker({ color, setColor }) {
     function handleColorChange(event) {
@@ -16,7 +16,7 @@ function ColorPicker({ color, setColor }) {
                 className="picker"
                 title="Click to choose a color" // Optional: Adding a title for extra information on hover
             />
-            <ColorDisplay color={color} />
+            <ColorDisplay props={color} />
         </div>
     );
 }

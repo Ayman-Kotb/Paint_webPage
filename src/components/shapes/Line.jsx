@@ -3,7 +3,7 @@ import { Line } from "fabric"
 class myLine extends Shape {
     create(color){
         return new Line(
-            [{ x: 50, y: 50 }, { x: 100, y: 100 }],
+            [50 ,50 ,100 ,100],
             {
                 stroke:`${color}`,
                 strokeWidth: 3,
