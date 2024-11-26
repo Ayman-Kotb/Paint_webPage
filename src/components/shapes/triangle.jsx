@@ -2,13 +2,13 @@ import { Triangle } from "fabric"
 import Shape from "./Shape"
 
 class myTriangle extends Shape {
-    create(){
+    create(color){
         return new Triangle({
             top: 100,
             left: 100,
             width: 100,
             height: 100,
-            fill: "red",
+            fill: `${color}`,
         })
     }
 }

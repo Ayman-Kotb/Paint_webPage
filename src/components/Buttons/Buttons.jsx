@@ -7,17 +7,18 @@ import { GoHorizontalRule } from "react-icons/go";
 import { FaSquare } from "react-icons/fa6";
 import { IoTriangle } from "react-icons/io5";
 
-function Buttons({canvas}){
-
+function Buttons({canvas , color}){
+      console.log(color);
     const addShape = (typeOfShape) => {
       if(!canvas.current) return;
       const factory = new shapeFactory();
       //console.log(`the canvas is`);
       //console.log(canvas.current);
       const shape = factory.createShape(typeOfShape);
-      const myShape = shape.create();
+      const myShape = shape.create(color);
       //console.log(`the shape is ${typeOfShape}`);
       //console.log(myShape);
+  
       canvas.current.add(myShape);         
     }
 
