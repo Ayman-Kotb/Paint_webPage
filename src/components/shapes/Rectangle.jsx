@@ -1,4 +1,4 @@
-import "./Shape"
+import Shape from "./Shape"
 import { Rect } from "fabric"
 
 class Rectangle extends Shape {

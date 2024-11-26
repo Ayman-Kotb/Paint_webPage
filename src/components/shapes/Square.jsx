@@ -1,5 +1,5 @@
 import { Rect } from "fabric"
-import "./Shape"
+import Shape from "./Shape"
 
 class Square extends Shape {
     create(){

@@ -1,5 +1,5 @@
 import { Triangle } from "fabric"
-import "./Shape"
+import Shape from "./Shape"
 
 class myTriangle extends Shape {
     create(){

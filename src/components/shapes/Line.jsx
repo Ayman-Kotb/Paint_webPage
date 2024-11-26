@@ -1,4 +1,4 @@
-import "./Shape"
+import Shape from "./Shape"
 import { Line } from "fabric"
 class myLine extends Shape {
     create(){

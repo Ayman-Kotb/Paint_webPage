@@ -2,7 +2,7 @@ import myCircle from "../shapes/Circle.jsx";
 import myLine from "../shapes/Line.jsx";
 import Rectangle from "../shapes/Rectangle.jsx";
 import myTriangle from "../shapes/triangle.jsx";
-import Poly from "../shapes/Polygon.jsx";
+import myPolygon from "../shapes/Polygon.jsx";
 import Square from "../shapes/Square.jsx";
 
 class ShapeFactory {
@@ -17,7 +17,7 @@ class ShapeFactory {
             case "triangle":
                 return new myTriangle(options)
             case "polygon":
-                return new Poly(options)
+                return new myPolygon(options)
             case "square":
                 return new Square(options)
             default:

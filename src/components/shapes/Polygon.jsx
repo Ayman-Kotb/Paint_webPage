@@ -1,5 +1,5 @@
 import { Polygon } from "fabric"
-import "./Shape"
+import Shape from "./Shape"
 
 class myPolygon extends Shape {
     create(){
