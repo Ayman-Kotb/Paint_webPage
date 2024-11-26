@@ -9,8 +9,8 @@ function CanvasComponent(){
     useEffect(()=>{
         if(canvasRef.current){
             const startCanvas = new Canvas(canvasRef.current,{
-                height: 600,
-                width: 600,
+                height: 450,
+                width: 900,
             })
             startCanvas.renderAll()
             setCanvas(startCanvas)
