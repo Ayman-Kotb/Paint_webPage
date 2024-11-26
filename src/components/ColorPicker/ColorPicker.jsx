@@ -1,7 +1,8 @@
 import ColorDisplay from "./ColorDisplay";
 import "./ColorPicker.css";
 
-function ColorPicker({ color, setColor, canvas }) {
+
+function ColorPicker({ color, setColor }) {
     function handleColorChange(event) {
         const theColor = event.target.value
         setColor(theColor);
