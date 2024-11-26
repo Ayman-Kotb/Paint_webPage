@@ -9,7 +9,7 @@ function Copy({canvas , color}){
     const CopySelected = () => {
         const active = canvas.current.getActiveObject()
         if(active){
-            const clonedShape = protoFac.createShape(active.type);
+            const clonedShape = protoFac.createShape(active.type === "rect"? "rectangle" : active.type);
             const myClonedShape = clonedShape.create(color);
             canvas.current.add(myClonedShape)
             canvas.current.setActiveObject(myClonedShape)
