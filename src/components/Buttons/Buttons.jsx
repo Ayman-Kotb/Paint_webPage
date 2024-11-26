@@ -1,3 +1,4 @@
+import shapeFactory from "../shapeFactory/ShapeFactory";
 import "./Buttons.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -10,8 +11,9 @@ import { FaRegCircle } from "react-icons/fa";
 
 function Buttons(){
 
-    const addShape = (typeOfShape) => {
-
+    const addShape = (typeOfShape, ...options) => {
+      const shape = shapeFactory(typeOfShape, ...options);
+      shape.create();
     }
 
 

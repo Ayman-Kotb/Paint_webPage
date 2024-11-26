@@ -1,9 +1,10 @@
-import { fabric } from "fabric"
-import "./Shape"
+import { Polygon } from "fabric"
+import Shape from "./Shape"
 
-class Polygon extends Shape {
+class myPolygon extends Shape {
     create(){
-        return new fabric.Polygon(
+        return new Polygon(
+            this.options.points || 
             [
                 { x: 200, y: 0 },
                 { x: 250, y: 100 },
@@ -18,4 +19,4 @@ class Polygon extends Shape {
     }
 }
 
-export default Polygon
+export default myPolygon

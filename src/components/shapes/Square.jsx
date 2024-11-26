@@ -1,9 +1,9 @@
-import { fabric } from "fabric"
-import "./Shape"
+import { Rect } from "fabric"
+import Shape from "./Shape"
 
 class Square extends Shape {
     create(){
-        return new fabric.Rect({
+        return new Rect({
             top: this.options.top || 100,
             left: this.options.left || 100,
             width: this.options.width || 100,
