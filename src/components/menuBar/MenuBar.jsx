@@ -12,7 +12,7 @@ function MenuBar({canvas}) {
     
     return (
         <div className="menuBar_container">
-            <ColorPicker color={color} setColor={setColor} /> {/* Pass color and setColor to ColorPicker */}
+            <ColorPicker color={color} setColor={setColor} canvas={canvas}/> {/* Pass color and setColor to ColorPicker */}
             <Buttons canvas={canvas} color={color} /> {/* Pass the color prop to Buttons */}
             <FreeHand />
             <SaveLoad />

@@ -1,15 +1,16 @@
+import { useEffect, useRef } from "react";
 import shapeFactory from "../shapeFactory/ShapeFactory";
 
 function Buttons({canvas , color}){
+    const factory = useRef(null);
+    useEffect(()=>{
+      const myFactory = new shapeFactory();
+      factory.current = myFactory
+    },[])
     const addShape = (typeOfShape) => {
       if(!canvas.current) return;
-      const factory = new shapeFactory();
-      //console.log(`the canvas is`);
-      //console.log(canvas.current);
-      const shape = factory.createShape(typeOfShape);
+      const shape = factory.current.createShape(typeOfShape);
       const myShape = shape.create(color);
-      //console.log(`the shape is ${typeOfShape}`);
-      //console.log(myShape);
   
       canvas.current.add(myShape);         
     }

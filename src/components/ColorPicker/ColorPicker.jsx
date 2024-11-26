@@ -1,9 +1,15 @@
 import ColorDisplay from "./ColorDisplay";
 import "./ColorPicker.css";
 
-function ColorPicker({ color, setColor }) {
+function ColorPicker({ color, setColor, canvas }) {
     function handleColorChange(event) {
-        setColor(event.target.value);
+        const theColor = event.target.value
+        setColor(theColor);
+        const active = canvas.current.getActiveObject()
+        if(active){
+            active.set("fill", theColor);
+            canvas.current.renderAll();
+        }
     }
 
     return (

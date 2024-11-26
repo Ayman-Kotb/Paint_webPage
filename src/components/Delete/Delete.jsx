@@ -7,6 +7,11 @@ function Delete({canvas}){
             canvas.current.renderAll()
         }
     }
+    window.addEventListener('keydown',(event)=> {
+      if(event.key === 'Delete'){
+        deleteSelected()
+      }
+    })
     return(
       <div className="container">
         <button className="button" onClick={deleteSelected}>Delete</button>
