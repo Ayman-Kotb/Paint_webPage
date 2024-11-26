@@ -27,6 +27,7 @@ function Buttons(){
         <button onClick={() => addShape ("square")} className="button"><FaSquare></FaSquare></button>
         <button onClick={() => addShape ("triangle")} className="button"><IoTriangle></IoTriangle></button>
         
+        
       </div>
   );
 };

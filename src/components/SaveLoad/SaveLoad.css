@@ -1,4 +1,4 @@
-.ContainerOfButtons{
+.SaveLoadContainer{
   margin: 20px;
   text-align: center;
   display: flex;
@@ -11,7 +11,8 @@
   border-radius: 10px;
   border: 1px solid white;
 }
-.button{
+
+.SaveLoad{
   margin: 5px;
   padding: 10px;
   border-radius: 10px;
@@ -20,10 +21,4 @@
   font-size: 15px;
   box-shadow: 1px 1px 1px red;
   font-size: 20px;
-}
-
-.button:hover{
-  background-color: black ;
-  color: red;
-  
 }

@@ -1,4 +1,4 @@
-.ContainerOfButtons{
+.FreeHandContainer{
   margin: 20px;
   text-align: center;
   display: flex;
@@ -11,7 +11,8 @@
   border-radius: 10px;
   border: 1px solid white;
 }
-.button{
+
+.FreeHand{
   margin: 5px;
   padding: 10px;
   border-radius: 10px;
@@ -22,7 +23,7 @@
   font-size: 20px;
 }
 
-.button:hover{
+.FreeHand:hover{
   background-color: black ;
   color: red;
   
