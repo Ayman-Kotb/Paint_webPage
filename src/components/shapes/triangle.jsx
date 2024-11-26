@@ -1,9 +1,9 @@
-import { fabric } from "fabric"
+import { Triangle } from "fabric"
 import "./Shape"
 
-class Triangle extends Shape {
+class TriAngle extends Shape {
     create(){
-        return new fabric.Triangle({
+        return new Triangle({
             top: this.options.top || 100,
             left: this.options.left || 100,
             width: this.options.width || 100,
@@ -13,4 +13,4 @@ class Triangle extends Shape {
     }
 }
 
-export default Triangle
+export default TriAngle

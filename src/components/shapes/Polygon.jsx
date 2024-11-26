@@ -1,9 +1,9 @@
-import { fabric } from "fabric"
+import { Polygon } from "fabric"
 import "./Shape"
 
-class Polygon extends Shape {
+class Poly extends Shape {
     create(){
-        return new fabric.Polygon(
+        return new Polygon(
             [
                 { x: 200, y: 0 },
                 { x: 250, y: 100 },
@@ -18,4 +18,4 @@ class Polygon extends Shape {
     }
 }
 
-export default Polygon
+export default Poly
