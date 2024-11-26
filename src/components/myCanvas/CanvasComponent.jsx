@@ -5,7 +5,7 @@ import "./CanvasComponent.css"
 
 function CanvasComponent({canvas}){
     const canvasRef = useRef(null)
-    useEffect(()=>{
+        useEffect(()=>{
         if(canvasRef.current){
             const startCanvas = new Canvas(canvasRef.current,{
                 height: 450,
