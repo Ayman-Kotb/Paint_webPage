@@ -16,7 +16,7 @@ function MenuBar({canvas}) {
             <Buttons canvas={canvas} color={color} /> {/* Pass the color prop to Buttons */}
             <FreeHand />
             <SaveLoad />
-            <Delete />
+            <Delete canvas = {canvas}/>
             <UndoRedo />
         </div>
     );

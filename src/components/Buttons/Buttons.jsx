@@ -1,7 +1,6 @@
 import shapeFactory from "../shapeFactory/ShapeFactory";
 
 function Buttons({canvas , color}){
-      console.log(color);
     const addShape = (typeOfShape) => {
       if(!canvas.current) return;
       const factory = new shapeFactory();

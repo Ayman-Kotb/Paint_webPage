@@ -3,7 +3,6 @@ import Shape from "./Shape";
 
 class myCircle extends Shape {
     create(color) {
-      console.log(5);
         return new Circle({
             radius: 50,
             fill: `${color}`,
