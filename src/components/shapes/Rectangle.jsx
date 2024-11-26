@@ -7,8 +7,8 @@ class Rectangle extends Shape {
         return new Rect({
             top: 100,
             left: 100,
-            width: 100,
-            height: 50,
+            width: 200,
+            height: 100,
             fill: `${color}`,
         })
     }

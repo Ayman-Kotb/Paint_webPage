@@ -1,8 +1,7 @@
 import ColorDisplay from "./ColorDisplay";
 import "./ColorPicker.css";
 
-
-function ColorPicker({ color, setColor }) {
+function ColorPicker({ color, setColor, canvas}) {
     function handleColorChange(event) {
         const theColor = event.target.value
         setColor(theColor);
@@ -10,6 +9,10 @@ function ColorPicker({ color, setColor }) {
         if(active){
             active.set("fill", theColor);
             active.set("stroke", theColor);
+            canvas.current.renderAll();
+        }
+        if (canvas.current.freeDrawingBrush) {
+            canvas.current.freeDrawingBrush.color = theColor;
             canvas.current.renderAll();
         }
     }
