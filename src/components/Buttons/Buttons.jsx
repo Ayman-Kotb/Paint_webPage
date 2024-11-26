@@ -10,8 +10,8 @@ import { IoTriangle } from "react-icons/io5";
 function Buttons(){
 
     const addShape = (typeOfShape) => {
-      const factory = new shapeFactory(typeOfShape);
-      const shape = factory.createShape();
+      const factory = new shapeFactory();
+      const shape = factory.createShape(typeOfShape);
       canvas.add(shape.create());           /// we need to insert the canvas "don't know how"
     }
 
