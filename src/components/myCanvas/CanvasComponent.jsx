@@ -20,7 +20,7 @@ function CanvasComponent({canvas}){
     }, []);
 
     return(
-        <canvas ref={canvasRef} className="canvas"/>
+        <canvas ref={canvasRef} id="canvas"/>
     )  
 }
 export default CanvasComponent
