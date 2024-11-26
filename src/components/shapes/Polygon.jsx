@@ -1,9 +1,10 @@
 import { Polygon } from "fabric"
 import "./Shape"
 
-class Poly extends Shape {
+class myPolygon extends Shape {
     create(){
         return new Polygon(
+            this.options.points || 
             [
                 { x: 200, y: 0 },
                 { x: 250, y: 100 },
@@ -18,4 +19,4 @@ class Poly extends Shape {
     }
 }
 
-export default Poly
+export default myPolygon

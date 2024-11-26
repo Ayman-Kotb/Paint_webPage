@@ -1,7 +1,7 @@
-import Circle from "../shapes/Circle.jsx";
-import Line from "../shapes/Line.jsx";
+import myCircle from "../shapes/Circle.jsx";
+import myLine from "../shapes/Line.jsx";
 import Rectangle from "../shapes/Rectangle.jsx";
-import TriAngle from "../shapes/triangle.jsx";
+import myTriangle from "../shapes/triangle.jsx";
 import Poly from "../shapes/Polygon.jsx";
 import Square from "../shapes/Square.jsx";
 
@@ -9,13 +9,13 @@ class ShapeFactory {
     createShape(shape,options){
         switch (shape){
             case "circle":
-                return new Circle(options)
+                return new myCircle(options)
             case "line":
-                return new Line(options)
+                return new myLine(options)
             case "rectangle":
                 return new Rectangle(options)
             case "triangle":
-                return new TriAngle(options)
+                return new myTriangle(options)
             case "polygon":
                 return new Poly(options)
             case "square":
