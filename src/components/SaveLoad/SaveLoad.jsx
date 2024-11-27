@@ -1,6 +1,7 @@
+import { useState } from "react";
 
-function SaveLoad({canvas}){
-
+function SaveLoad({ canvas }) {
+  
   const saveCanvasAsJSON = () => {
     if (!canvas.current) return;
     const canvasData = canvas.current.toJSON();
@@ -40,16 +41,51 @@ function SaveLoad({canvas}){
     link.click();
   };
 
+ 
+  const loadCanvasFromJSON = (event) => {
+    const file = event.target.files[0]; // Get the selected file
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const loadedData = JSON.parse(reader.result);
 
+        
+          canvas.current.loadFromJSON(loadedData, () => {
+        
+            canvas.current.renderAll(); 
+          
+          });
 
+          // Optional: Force a slight delay to ensure render is immediate
+          setTimeout(() => {
+            canvas.current.renderAll(); 
+          }, 0);
 
+        } catch (error) {
+          alert("Failed to load the canvas. Invalid JSON file.");
+          console.error("Error loading JSON:", error);
+        }
+      };
+      reader.readAsText(file);
+    }
+  };
 
-
-    return(
-      <div className="container">
-        <button onClick={saveCanvasAsJSON} className="button">💾 Save</button> 
-        <button className="button">Load</button>
-      </div>
-    )
+  return (
+    <div className="container">
+      <button onClick={saveCanvasAsJSON} className="button">💾 Save</button>
+      
+      {}
+      <input
+        type="file"
+        accept="application/json"
+        onChange={loadCanvasFromJSON}
+        style={{ display: 'none' }}
+        id="loadCanvasInput"
+      />
+      <button onClick={() => document.getElementById("loadCanvasInput").click()} className="button">📂 Load</button>
+    </div>
+  );
 }
-export default SaveLoad 
+
+export default SaveLoad;
