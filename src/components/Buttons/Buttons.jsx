@@ -136,7 +136,6 @@ function Buttons({ canvas, color }) {
           </label>
         </div>
       )}
-    <button onClick={saveCanvasAsJSON} className="button">💾 Save</button>  
     </div>
   );
 }
