@@ -1,11 +1,13 @@
 function Delete({canvas}){
     const deleteSelected = () => {
-        const active = canvas.current.getActiveObject()
-        if(active){
-            canvas.current.remove(active)
-            canvas.current.discardActiveObject()
-            canvas.current.renderAll()
-        }
+      const active = canvas.current.getActiveObjects()
+      if(active){
+        active.forEach((obj) => {
+          canvas.current.remove(obj);
+        })
+        canvas.current.discardActiveObject()
+        canvas.current.renderAll();
+      }
     }
     window.addEventListener('keydown',(event)=> {
       if(event.key === 'Delete'){

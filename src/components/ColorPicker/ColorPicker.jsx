@@ -5,10 +5,12 @@ function ColorPicker({ color, setColor, canvas}) {
     function handleColorChange(event) {
         const theColor = event.target.value
         setColor(theColor);
-        const active = canvas.current.getActiveObject()
+        const active = canvas.current.getActiveObjects()
         if(active){
-            active.set("fill", theColor);
-            active.set("stroke", theColor);
+            active.forEach((obj) => {
+              obj.set('fill', theColor);
+              obj.set('stroke', theColor);
+            })
             canvas.current.renderAll();
         }
         if (canvas.current.freeDrawingBrush) {
