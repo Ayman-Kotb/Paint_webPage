@@ -9,6 +9,7 @@ function ColorPicker({ color, setColor, canvas}) {
         if(active){
             active.set("fill", theColor);
             active.set("stroke", theColor);
+            active.color = theColor;
             canvas.current.renderAll();
         }
         if (canvas.current.freeDrawingBrush) {

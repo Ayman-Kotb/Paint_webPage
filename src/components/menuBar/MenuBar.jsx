@@ -22,7 +22,7 @@ function MenuBar({ canvas }) {
             <Copy canvas={canvas}/>
             <Delete canvas={canvas} />
             <UndoRedo />
-            <Setting canvas={canvas}/> {/* Pass canvas to Setting */}
+            
         </div>
     );
 }

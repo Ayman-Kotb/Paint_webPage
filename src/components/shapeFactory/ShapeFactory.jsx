@@ -7,13 +7,17 @@ class ShapeFactory {
     createShape( {shape , color , radius , width , height}){
         switch (shape){
             case "circle":
-                return new myCircle().create(color ,radius)
+                if (radius ===0)return new myCircle().create(color)
+                else return new myCircle().create(color ,radius)
             case "line":
-                return new myLine()
+                return new myLine().create(color)
             case "rectangle":
-                return new Rectangle().create(color,width,height)
+                console.log(width + " " + height)
+                if (width ===0 || height ===0) return new Rectangle().create(color)
+                else return new Rectangle().create(color, width , height)
             case "triangle":
-                return new myTriangle().create(color,width,height)
+                if (width ===0 || height ===0) return new myTriangle().create(color)
+                else return new myTriangle().create(color, width , height)
             default:
                 throw new Error(`${shape} is not valid`)
         }
