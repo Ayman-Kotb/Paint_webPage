@@ -9,7 +9,7 @@ function Buttons({ canvas, color }) {
     factory.current = myFactory
   }, [])
   const addShape = ({ typeOfShape, radius = 0, width = 0, height = 0 }) => {
-    console.log(width + " " + height)
+    //console.log(width + " " + height)
     if (!canvas.current) return;
     const shape = factory.current.createShape({ shape: typeOfShape, color: color, radius: radius, width: width, height: height });
     // const myShape = shape.create(color);
@@ -50,7 +50,7 @@ function Buttons({ canvas, color }) {
   };
   const handleSubmit = (type) => {
     if (type == "rec") {
-      console.log(width + " " + height)
+      //console.log(width + " " + height)
       if (width === ""|| height === ""){
         addShape({ typeOfShape: "rectangle"})
       }
@@ -58,7 +58,7 @@ function Buttons({ canvas, color }) {
       setShowInputRec(false);
     }
     else {
-      console.log(width + " " + height)
+      //console.log(width + " " + height)
       if (width == ""|| height == ""){
         addShape({ typeOfShape: "triangle"})
       }
