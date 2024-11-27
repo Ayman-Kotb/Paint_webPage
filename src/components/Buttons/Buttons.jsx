@@ -39,12 +39,8 @@ function Buttons({ canvas, color }) {
   // Handle Shape Selection
   useEffect(() => {
     if (!canvas.current) return;
-    const activeObject = canvas.current.getActiveObjects()
-    if (!activeObject) return;
-    console.log(activeObject);
-    canvas.current.on("selection:created", ()=>handleSelection({target: activeObject}));
-    canvas.current.on("selection:updated", ()=>handleSelection({target: activeObject}));
-    canvas.current.on("selection:cleared", () => {
+    console.log("called")
+    const handleSelectionCleared = () => {
       setSelectedShape(null);
       setProperties({
         width: 0,
@@ -52,13 +48,20 @@ function Buttons({ canvas, color }) {
         radius: 0,
         fill: "#000000",
       });
-    });
+    };
+    canvas.current.on("selection:created", handleSelection);
+    canvas.current.on("selection:updated", handleSelection);
+    canvas.current.on("selection:cleared", handleSelectionCleared);
+    return () => {
+      canvas.current.off("selection:created", handleSelection);
+      canvas.current.off("selection:updated", handleSelection);
+      canvas.current.off("selection:cleared", handleSelectionCleared);
+    }
   }, [canvas.current]);
 
-  const handleSelection = (event) => {
-    const activeObject = event.target;
+  const handleSelection = () => {
+    const activeObject = canvas.current.getActiveObject();
     if (!activeObject) return;
-    console.log(activeObject.type+"  "+activeObject);
     setSelectedShape(activeObject);
     setProperties({
       width: activeObject.width * activeObject.scaleX || 0,
@@ -72,18 +75,21 @@ function Buttons({ canvas, color }) {
     if (!selectedShape) return;
     
     if (property === "width" || property === "height") {
-      const scaleValue = value / (property === "width" ? selectedShape.width : selectedShape.height);
-      selectedShape.scaleX = property === "width" ? scaleValue : selectedShape.scaleX;
-      selectedShape.scaleY = property === "height" ? scaleValue : selectedShape.scaleY;
+      const scaleValue =
+        value / (property === "width" ? selectedShape.width : selectedShape.height);
+      if (property === "width") {
+        selectedShape.scaleX = scaleValue;
+      } else {
+        selectedShape.scaleY = scaleValue;
+      }
+    } else if (property === "radius") {
+      selectedShape.set("radius", value);
     } else {
       selectedShape.set(property, value);
     }
     setProperties((prev) => ({ ...prev, [property]: value }));
     canvas.current.renderAll();
   };
-
-
-  
 
   return (
     <div className="container">

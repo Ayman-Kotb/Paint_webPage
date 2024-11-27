@@ -54,8 +54,7 @@ function FreeHand({ canvas, color , size, setSize }) {
                 obj.onDragStart = () => {};
             }
         });
-        console.log('Canvas objects:', canvas.current.getObjects());
-    
+   
         canvas.current.renderAll();
     };
 
