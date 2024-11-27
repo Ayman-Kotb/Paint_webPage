@@ -3,12 +3,12 @@ import Shape from "./Shape"
 
 class myTriangle extends Shape {
     type= "triangle";
-    create(color){
+    create(color , width=100 , height=100){
         return new Triangle({
             top: 100,
             left: 100,
-            width: 150,
-            height: 150,
+            width: width,
+            height: height,
             fill: `${color}`,
         })
     }
