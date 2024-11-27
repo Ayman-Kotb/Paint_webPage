@@ -3,7 +3,7 @@ import React from "react";
 import Shape from "./Shape";
 
 class myCircle extends Shape {
-    // type = "circle";
+    type = "circle";
     // [top , setTop] = useState(50) ;
     // [left, setLeft] = useState(50);
     // [radius, setRadius] = useState(50);
@@ -16,6 +16,7 @@ class myCircle extends Shape {
             fill: `${color}`,
             left: 50,
             top: 50,
+            type: "circle",
         });
     }
 }

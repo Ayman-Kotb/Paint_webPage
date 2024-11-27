@@ -16,6 +16,7 @@ class myTriangle extends Shape {
             originY: "top",
             scaleX: 1,
             scaleY: 1,
+            type: "triangle",
         })
     }
 }

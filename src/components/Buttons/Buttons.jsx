@@ -1,83 +1,88 @@
 import { useEffect, useRef, useState } from "react";
 import shapeFactory from "../shapeFactory/ShapeFactory";
-import Shape from "../shapes/Shape";
 
 function Buttons({ canvas, color }) {
   const factory = useRef(null);
+
+  // Initialize Shape Factory
   useEffect(() => {
     const myFactory = new shapeFactory();
-    factory.current = myFactory
-  }, [])
+    factory.current = myFactory;
+  }, []);
+
+  const [selectedShape, setSelectedShape] = useState(null); // Track the selected shape
+  const [properties, setProperties] = useState({
+    width: 0,
+    height: 0,
+    radius: 0,
+    fill: "#000000",
+  });
+
+  // Add Shape to Canvas
   const addShape = ({ typeOfShape, radius = 0, width = 0, height = 0 }) => {
-    //console.log(width + " " + height)
     if (!canvas.current) return;
-    const shape = factory.current.createShape({ shape: typeOfShape, color: color, radius: radius, width: width, height: height });
-    // const myShape = shape.create(color);
+
+    // Create the shape
+    const shape = factory.current.createShape({
+      shape: typeOfShape,
+      color: color,
+      radius: radius,
+      width: width,
+      height: height,
+    });
     canvas.current.add(shape);
-  }
-  const [showInput, setShowInput] = useState(false); 
-  const [showInputRec, setShowInputRec] = useState(false); 
-  const [showInputTri, setShowInputTri] = useState(false); 
-  const [radius, setRadius] = useState(""); 
-  const [width, setWidth] = useState(""); 
-  const [height, setHeight] = useState(""); 
-  const handleButtonClickRec = () => {
-    setShowInputRec(!showInputRec);
-    setShowInput(false);
-    setShowInputTri(false);
+    canvas.current.setActiveObject(shape);
+    handleSelection({ target: shape }); // Simulate selection after adding
+    canvas.current.renderAll();
+  };
+  
+  // Handle Shape Selection
+  useEffect(() => {
+    if (!canvas.current) return;
+    const activeObject = canvas.current.getActiveObjects()
+    if (!activeObject) return;
+    console.log(activeObject);
+    canvas.current.on("selection:created", ()=>handleSelection({target: activeObject}));
+    canvas.current.on("selection:updated", ()=>handleSelection({target: activeObject}));
+    canvas.current.on("selection:cleared", () => {
+      setSelectedShape(null);
+      setProperties({
+        width: 0,
+        height: 0,
+        radius: 0,
+        fill: "#000000",
+      });
+    });
+  }, [canvas.current]);
 
+  const handleSelection = (event) => {
+    const activeObject = event.target;
+    if (!activeObject) return;
+    console.log(activeObject.type+"  "+activeObject);
+    setSelectedShape(activeObject);
+    setProperties({
+      width: activeObject.width * activeObject.scaleX || 0,
+      height: activeObject.height * activeObject.scaleY || 0,
+      radius: activeObject.radius || 0,
+      fill: activeObject.fill || "#000000",
+    });
   };
-  const handleButtonClickTri = () => {
-    setShowInputTri(!showInputTri);
-    setShowInputRec(false);
-    setShowInput(false);
 
-  };
-  const handleButtonClick = () => {
-    setShowInput(!showInput);
-    setShowInputRec(false);
-    setShowInputTri(false);
-
-  };
-  const handleRadiusChange = (e) => {
-    setRadius(e.target.value);
-  };
-  const handleWidthChange = (e) => {
-    setWidth(e.target.value);
-  };
-  const handleHeightChange = (e) => {
-    setHeight(e.target.value);
-  };
-  const handleSubmit = (type) => {
-    if (type == "rec") {
-      //console.log(width + " " + height)
-      if (width === ""|| height === ""){
-        addShape({ typeOfShape: "rectangle"})
-      }
-      else addShape({ typeOfShape: "rectangle", width: width, height: height })
-      setShowInputRec(false);
-    }
-    else {
-      //console.log(width + " " + height)
-      if (width == ""|| height == ""){
-        addShape({ typeOfShape: "triangle"})
-      }
-      else addShape({ typeOfShape: "triangle", width: width, height: height })
-      setShowInputTri(false);
-    }
-  };
-  const handleCircleSubmit = () => {
+  const updateProperty = (property, value) => {
+    if (!selectedShape) return;
     
-    if (radius === ""){
-      addShape({ typeOfShape: "circle"})
+    if (property === "width" || property === "height") {
+      const scaleValue = value / (property === "width" ? selectedShape.width : selectedShape.height);
+      selectedShape.scaleX = property === "width" ? scaleValue : selectedShape.scaleX;
+      selectedShape.scaleY = property === "height" ? scaleValue : selectedShape.scaleY;
+    } else {
+      selectedShape.set(property, value);
     }
-    else {
-      addShape({ typeOfShape: "circle", radius: radius })
-    }
-    setShowInput(false);
+    setProperties((prev) => ({ ...prev, [property]: value }));
+    canvas.current.renderAll();
   };
 
-
+  // Save Canvas Data as JSON
   const saveCanvasAsJSON = () => {
     if (!canvas.current) return;
     const canvasData = canvas.current.toJSON();
@@ -117,77 +122,59 @@ function Buttons({ canvas, color }) {
     link.click();
   };
 
-
-
-
   return (
     <div className="container">
-      <button onClick={() => handleButtonClick()} className="button">⚫</button>
-      {showInput && (
-        <div style={{ marginTop: "20px", border: "1px solid black", padding: "10px" }}>
-          <label>
-            Enter Radius:
-            <input
-              type="number"
-              value={radius}
-              onChange={handleRadiusChange}
-              placeholder="Enter radius"
-            />
-          </label>
-          <button onClick={handleCircleSubmit}>Submit</button>
-        </div>
-      )}
+      <button onClick={() => addShape({ typeOfShape: "circle" })} className="button">⚫</button>
       <button onClick={() => addShape({typeOfShape: "line"})} className="button">📏</button>
-      <button onClick={() => handleButtonClickRec()} className="button">🟦</button>
-      {showInputRec && (
+      <button onClick={() => addShape({ typeOfShape: "rectangle" })} className="button">🟦</button>
+      <button onClick={() => addShape({ typeOfShape: "triangle" })} className="button">🔺</button>
+
+      {/* Toolbox for Selected Shape Properties */}
+      {selectedShape && (
         <div style={{ marginTop: "20px", border: "1px solid black", padding: "10px" }}>
+          <h4>Edit Shape Properties</h4>
+          {(selectedShape.type === "rect" || selectedShape.type === "triangle") && (
+            <>
+              <label>
+                Width:
+                <input
+                  type="number"
+                  value={properties.width}
+                  onChange={(e) => updateProperty("width", Number(e.target.value))}
+                />
+              </label>
+              <label>
+                Height:
+                <input
+                  type="number"
+                  value={properties.height}
+                  onChange={(e) => updateProperty("height", Number(e.target.value))}
+                />
+              </label>
+            </>
+          )}
+          {selectedShape.type === "circle" && (
+            <label>
+              Radius:
+              <input
+                type="number"
+                value={properties.radius}
+                onChange={(e) => updateProperty("radius", Number(e.target.value))}
+              />
+            </label>
+          )}
           <label>
-            Enter Width:
+            Fill Color:
             <input
-              type="number"
-              value={width}
-              onChange={handleWidthChange}
-              placeholder="Enter width"
+              type="color"
+              value={properties.fill}
+              onChange={(e) => updateProperty("fill", e.target.value)}
             />
           </label>
-          <label>
-            Enter Height:
-            <input
-              type="number"
-              value={height}
-              onChange={handleHeightChange}
-              placeholder="Enter Height"
-            />
-          </label>
-          <button onClick={() => handleSubmit("rec")}>Submit</button>
         </div>
       )}
-      <button onClick={() => handleButtonClickTri()} className="button">🔺</button>
-      {showInputTri && (
-        <div style={{ marginTop: "20px", border: "1px solid black", padding: "10px" }}>
-          <label>
-            Enter Width:
-            <input
-              type="number"
-              value={width}
-              onChange={handleWidthChange}
-              placeholder="Enter width"
-            />
-          </label>
-          <label>
-            Enter Height:
-            <input
-              type="number"
-              value={height}
-              onChange={handleHeightChange}
-              placeholder="Enter Height"
-            />
-          </label>
-          <button onClick={() => handleSubmit("triangle")}>Submit</button>
-        </div>
-      )}
-    <button onClick={saveCanvasAsJSON} className="button">💾 Save</button>  
+      <button onClick={saveCanvasAsJSON} className="button">💾 Save</button>
     </div>
   );
-};
+}
 export default Buttons;

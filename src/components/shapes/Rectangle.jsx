@@ -21,6 +21,7 @@ class Rectangle extends Shape {
             scaleY: 1,
             originX: "left", // Align origin to top-left
             originY: "top",
+            type: "rectangle",
         })
     }
 }

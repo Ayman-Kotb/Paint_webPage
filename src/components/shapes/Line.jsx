@@ -8,6 +8,7 @@ class myLine extends Shape {
             {
                 stroke:`${color}`,
                 strokeWidth: 3,
+                type: "line",
             }
         )
     }
