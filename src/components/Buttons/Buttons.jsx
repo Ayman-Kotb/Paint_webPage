@@ -11,7 +11,6 @@ function Buttons({canvas , color}){
       if(!canvas.current) return;
       const shape = factory.current.createShape(typeOfShape);
       const myShape = shape.create(color);
-  
       canvas.current.add(myShape);         
     }
 
