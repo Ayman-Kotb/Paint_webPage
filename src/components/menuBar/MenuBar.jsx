@@ -7,6 +7,7 @@ import SaveLoad from "../SaveLoad/SaveLoad.jsx";
 import Delete from "../Delete/Delete.jsx";
 import UndoRedo from "../UndoRedo/UndoRedo.jsx";
 import Copy from "../Copy/Copy.jsx";
+import Setting from "../Setting/Setting.jsx";
 
 function MenuBar({ canvas }) {
     const [color, setColor] = useState("#000000"); // Manage color state in MenuBar
@@ -21,6 +22,7 @@ function MenuBar({ canvas }) {
             <Copy canvas={canvas}/>
             <Delete canvas={canvas} />
             <UndoRedo />
+            
         </div>
     );
 }

@@ -4,16 +4,20 @@ import Rectangle from "../shapes/Rectangle.jsx";
 import myTriangle from "../shapes/triangle.jsx";
 
 class ShapeFactory {
-    createShape(shape){
+    createShape( {shape , color , radius , width , height}){
         switch (shape){
             case "circle":
-                return new myCircle()
+                if (radius ===0)return new myCircle().create(color)
+                else return new myCircle().create(color ,radius)
             case "line":
-                return new myLine()
+                return new myLine().create(color)
             case "rectangle":
-                return new Rectangle()
+                console.log(width + " " + height)
+                if (width ===0 || height ===0) return new Rectangle().create(color)
+                else return new Rectangle().create(color, width , height)
             case "triangle":
-                return new myTriangle()
+                if (width ===0 || height ===0) return new myTriangle().create(color)
+                else return new myTriangle().create(color, width , height)
             default:
                 throw new Error(`${shape} is not valid`)
         }

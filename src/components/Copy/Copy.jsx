@@ -9,12 +9,22 @@ function Copy({canvas , color}){
     const CopySelected = () => {
         const active = canvas.current.getActiveObject()
         if(active){
-            const clonedShape = protoFac.createShape(active.type === "rect"? "rectangle" : active.type);
-            console.log(active.type);
-            const myClonedShape = clonedShape.create(color);
-            canvas.current.add(myClonedShape)
-            canvas.current.setActiveObject(myClonedShape)
-            canvas.current.renderAll()
+            if (active.type === "rect"){
+              const clonedShape = protoFac.createShape({shape: "rectangle" , color : active.color ,height: active.height , width: active.width , radius: active.radius});
+              console.log(active.type);
+            // const myClonedShape = clonedShape.create(color);
+              canvas.current.add(clonedShape)
+              canvas.current.setActiveObject(clonedShape)
+              canvas.current.renderAll()
+            }
+            else {
+              const clonedShape = protoFac.createShape({shape: active.type , color : active.color ,height: active.height , width: active.width , radius: active.radius});  
+              console.log(active.type);
+            // const myClonedShape = clonedShape.create(color);
+              canvas.current.add(clonedShape)
+              canvas.current.setActiveObject(clonedShape)
+              canvas.current.renderAll()
+            }
         }
     }
     return(
