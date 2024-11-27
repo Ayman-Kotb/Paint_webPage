@@ -10,6 +10,7 @@ function Copy({canvas , color}){
         const active = canvas.current.getActiveObject()
         if(active){
             const clonedShape = protoFac.createShape(active.type === "rect"? "rectangle" : active.type);
+            console.log(active.type);
             const myClonedShape = clonedShape.create(color);
             canvas.current.add(myClonedShape)
             canvas.current.setActiveObject(myClonedShape)
