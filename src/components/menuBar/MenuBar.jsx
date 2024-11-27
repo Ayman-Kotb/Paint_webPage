@@ -18,7 +18,7 @@ function MenuBar({ canvas }) {
             <ColorPicker color={color} setColor={setColor} canvas={canvas} /> {/* Pass color and setColor to ColorPicker */}
             <Buttons canvas={canvas} color={color} size={size} /> {/* Pass size to Buttons */}
             <FreeHand canvas={canvas} color={color} size={size} setSize={setSize} /> {/* Pass size to FreeHand */}  
-            <SaveLoad />
+            <SaveLoad canvas={canvas}/>
             <Copy canvas={canvas}/>
             <Delete canvas={canvas} />
             <UndoRedo />
