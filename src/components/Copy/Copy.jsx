@@ -17,19 +17,17 @@ function Copy({canvas , color}){
             });
             return;
         }
-        
-        
-
+        console.log(active.get("type"));
             if (active.type === "rect"){
-              const clonedShape = protoFac.createShape({shape: "rectangle" , color : active.color ,height: active.height , width: active.width , radius: active.radius});
-              console.log(active.type);
+              const clonedShape = protoFac.createShape({shape: "rectangle" , color : active.get("stroke") ,height: active.get("height") , width: active.get("width") , radius: active.get("radius") , strokeWidth: active.get("strokeWidth") , fillColor: active.get("fill")});
+              console.log(active.get("width") +"   "+ active.get("height")+" from copy");
             // const myClonedShape = clonedShape.create(color);
               canvas.current.add(clonedShape)
               canvas.current.setActiveObject(clonedShape)
               canvas.current.renderAll()
             }
             else {
-              const clonedShape = protoFac.createShape({shape: active.type , color : active.color ,height: active.height , width: active.width , radius: active.radius});  
+              const clonedShape = protoFac.createShape({shape: active.type , color : active.get("stroke") ,height: active.get("height") , width: active.get("width") , radius: active.get("radius") , strokeWidth: active.get("strokeWidth") , fillColor: active.get("fill")});  
               console.log(active.type);
             // const myClonedShape = clonedShape.create(color);
               canvas.current.add(clonedShape)

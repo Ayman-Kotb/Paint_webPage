@@ -2,11 +2,11 @@ import Shape from "./Shape"
 import { Rect } from "fabric"
 
 class Rectangle extends Shape {
-    create(color, width = 200, height = 100, strokeWidth = 3) {
+    create(color, width = 200, height = 100, strokeWidth = 3 , fillColor= "white") {
         return new Rect({
             top: 100,
             left: 100,
-            fill: "white",
+            fill: fillColor,
             stroke: color,
             strokeWidth: strokeWidth,
             width: width, // Adjust width to remove stroke inflation
