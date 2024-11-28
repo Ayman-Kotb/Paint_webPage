@@ -66,9 +66,9 @@ function Buttons({ canvas, color }) {
     if (!activeObject) return;
     setSelectedShape(activeObject);
     setProperties({
-      width: Math.round(activeObject.width * activeObject.scaleX) || 0,
-      height: Math.round(activeObject.height * activeObject.scaleY) || 0,
-      radius: Math.round(activeObject.radius) || 0,
+      width: activeObject.width * activeObject.scaleX || 0,
+      height: activeObject.height * activeObject.scaleY || 0,
+      radius: activeObject.radius || 0,
       strokeWidth: activeObject.strokeWidth || 3,
       fill: activeObject.fill || "#FFFFFF",
     });
@@ -77,15 +77,14 @@ function Buttons({ canvas, color }) {
   const updateProperty = (property, value) => {
     if (!selectedShape) return;
     if (property === "width" || property === "height") {
-      const scaleValue =
-        Math.round(value / (property === "width" ? selectedShape.width : selectedShape.height));
+      const scaleValue = value / (property === "width" ? selectedShape.width : selectedShape.height);
       if (property === "width") {
         selectedShape.scaleX = scaleValue;
       } else {
         selectedShape.scaleY = scaleValue;
       }
     } else if (property === "radius") {
-      selectedShape.set("radius", Math.round(value));
+      selectedShape.set("radius", value);
     } else if (property === "strokeWidth") {
       selectedShape.set("strokeWidth", value);
     } 
@@ -119,7 +118,7 @@ function Buttons({ canvas, color }) {
                   value={properties.width}
                   onChange={(e) => updateProperty("width", Number(e.target.value))}
                 />
-                <label>{properties.width}</label>
+                <label>{Math.round(properties.width)}</label>
                 <br/><br/>
               </label>
               <label>
@@ -132,7 +131,7 @@ function Buttons({ canvas, color }) {
                   value={properties.height}
                   onChange={(e) => updateProperty("height", Number(e.target.value))}
                 />
-                <label>{properties.height}</label>
+                <label>{Math.round(properties.height)}</label>
                 <br/><br/>
               </label>
             </>
