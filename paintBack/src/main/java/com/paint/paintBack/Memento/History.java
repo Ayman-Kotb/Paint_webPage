@@ -1,4 +1,4 @@
-package com.lab2.paint.back.Memento;
+package com.paint.paintBack.Memento;
 
 import java.util.Stack;
 
@@ -27,5 +27,9 @@ public class History {
         }else {
             throw new IllegalStateException("Cannot redo");
         }
+    }
+
+    public boolean isEmpty() {
+        return Back.isEmpty();
     }
 }

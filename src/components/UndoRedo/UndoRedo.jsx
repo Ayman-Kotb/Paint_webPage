@@ -4,7 +4,7 @@ function UndoRedo({ canvas }) {
   // Save the canvas state to the backend
   async function saveCanvasState(canvasJson) {
     try {
-      await axios.post('/api/canvas/save', canvasJson, {
+      await axios.post('https://localhost:8080/api/canvas/save', canvasJson, {
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (error) {
@@ -15,40 +15,42 @@ function UndoRedo({ canvas }) {
   // Undo action
   async function undo() {
     try {
-      const response = await axios.get('/api/canvas/undo');
+      const response = await axios.get('http://localhost:8080/api/canvas/undo');
       const data = response.data;
 
       if (data.error) {
-        console.error(data.error); // Log error from backend
+        console.error("undo Error: ",data.error); // Log error from backend
         return;
       }
-      console.log(canvas.current)
-      canvas.current.loadFromJSON(data, () => {
+      // console.log(data);
+      const jsonData = JSON.parse(data);
+      // console.log(jsonData);
+      canvas.current.loadFromJSON(jsonData, () => {
         canvas.current.renderAll(); // Render the updated canvas state
       });
     } catch (error) {
-      console.error("Undo failed:", error);
-      console.log(data);
+      console.error(error);
     }
   }
 
   // Redo action
   async function redo() {
     try {
-      const response = await axios.get('/api/canvas/redo');
+      const response = await axios.get('http://localhost:8080/api/canvas/redo');
       const data = response.data;
 
       if (data.error) {
-        console.error(data.error); // Log error from backend
+        console.error("redo Error: ",data.error); // Log error from backend
         return;
       }
-
-      canvas.current.loadFromJSON(data, () => {
+      // console.log(data);
+      const jsonData = JSON.parse(data);
+      // console.log(jsonData);
+      canvas.current.loadFromJSON(jsonData, () => {
         canvas.current.renderAll(); // Render the updated canvas state
       });
     } catch (error) {
-      console.error("Redo failed:", error);
-      console.log(data);
+      console.error(error);
     }
   }
 
