@@ -34,14 +34,12 @@ function Copy({canvas}){
             });
             return ;
           }
-        
-
           const clonedShape = protoFac.createShape({
             shape: active.type === "rect"? "rectangle": active.type,
             color : active.get("stroke"),
             height: active.get("height")*active.get("scaleY"),
             width: active.get("width")*active.get("scaleX"),
-            radius: active.get("radius"),
+            radius: active.get("radius")*active.get("scaleX"),
             strokeWidth: active.get("strokeWidth"),
             fillColor: active.get("fill")
           });
