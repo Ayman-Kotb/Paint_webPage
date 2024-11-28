@@ -12,32 +12,49 @@ function Copy({canvas , color}){
         if(active){
 
           if (active instanceof fabric.Path) {
-            active.clone((clonedPath) => {
-                canvas.current.add(clonedPath);
+            const jsonRepresentation = active.toObject(['shouldStartDragging', 'getActiveControl', 'onDragStart', 'canDrop']); // Include custom properties
+
+            fabric.util.enlivenObjects([jsonRepresentation], ([clonedObject]) => {
+
+              clonedObject.shouldStartDragging = active.shouldStartDragging || (() => false);
+              clonedObject.getActiveControl = active.getActiveControl || (() => null);
+              clonedObject.onDragStart = active.onDragStart || (() => {});
+              clonedObject.canDrop = active.canDrop || (() => false);
+
+              Object.assign(clonedObject, {
+                ...active, 
+                left: active.left + 10, 
+                top: active.top + 10,
+              });
+          
+              
+              canvas.current.add(clonedObject);
+        
+              canvas.current.setActiveObject(clonedObject);
+          
+          
+              console.log(canvas.current.getObjects());
             });
-            return;
-        }
-        console.log(active);
-        console.log(active.get("type"));
+            return ;
+          }
+        
+
             if (active.type === "rect"){
-              const clonedShape = protoFac.createShape({shape: "rectangle" , color : active.get("stroke") ,height: active.get("height")*active.get("scaleY")  , width: active.get("width")*active.get("scaleX") , radius: active.get("radius") , strokeWidth: active.get("strokeWidth") , fillColor: active.get("fill")});
-              console.log(active.get("width") +"   "+ active.get("height")+" from copy");
-            // const myClonedShape = clonedShape.create(color);
-              canvas.current.add(clonedShape)
-              canvas.current.setActiveObject(clonedShape)
-              canvas.current.renderAll()
-              console.log(clonedShape); 
-            }
-            else {
-              const clonedShape = protoFac.createShape({shape: active.type , color : active.get("stroke") ,height: active.get("height")*active.get("scaleY")  , width: active.get("width")*active.get("scaleX")  , radius: active.get("radius") , strokeWidth: active.get("strokeWidth") , fillColor: active.get("fill")});  
+              const clonedShape = protoFac.createShape({shape: "rectangle" , color : active.color ,height: active.height , width: active.width , radius: active.radius});
               console.log(active.type);
             // const myClonedShape = clonedShape.create(color);
               canvas.current.add(clonedShape)
               canvas.current.setActiveObject(clonedShape)
               canvas.current.renderAll()
-              console.log(clonedShape); 
             }
-            
+            else {
+              const clonedShape = protoFac.createShape({shape: active.type , color : active.color ,height: active.height , width: active.width , radius: active.radius});  
+              console.log(active.type);
+            // const myClonedShape = clonedShape.create(color);
+              canvas.current.add(clonedShape)
+              canvas.current.setActiveObject(clonedShape)
+              canvas.current.renderAll()
+            }
         }
     }
     return(
