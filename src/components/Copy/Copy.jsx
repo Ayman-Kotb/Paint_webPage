@@ -35,7 +35,6 @@ function Copy({canvas}){
             return ;
           }
         
-
           const clonedShape = protoFac.createShape({
             shape: active.type === "rect"? "rectangle": active.type,
             color : active.get("stroke"),
