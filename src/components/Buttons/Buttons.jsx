@@ -53,10 +53,12 @@ function Buttons({ canvas, color }) {
     };
     canvas.current.on("selection:created", handleSelection);
     canvas.current.on("selection:updated", handleSelection);
+    canvas.current.on("object:modified", handleSelection);
     canvas.current.on("selection:cleared", handleSelectionCleared);
     return () => {
       canvas.current.off("selection:created", handleSelection);
       canvas.current.off("selection:updated", handleSelection);
+      canvas.current.off("object:modified", handleSelection);
       canvas.current.off("selection:cleared", handleSelectionCleared);
     }
   }, [canvas.current]);
@@ -72,6 +74,7 @@ function Buttons({ canvas, color }) {
       strokeWidth: activeObject.strokeWidth || 3,
       fill: activeObject.fill || "#FFFFFF",
     });
+    canvas.current.renderAll();
   };
 
   const updateProperty = (property, value) => {
@@ -147,7 +150,7 @@ function Buttons({ canvas, color }) {
                 value={properties.radius}
                 onChange={(e) => updateProperty("radius", Number(e.target.value))}
               />
-              <label>{properties.radius}</label>
+              <label>{Math.round(properties.radius*selectedShape.get("scaleX"))}</label>
               <br/><br/>
             </label>
           )}

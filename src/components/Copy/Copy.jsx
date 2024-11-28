@@ -29,7 +29,7 @@ function Copy({canvas , color}){
               console.log(clonedShape); 
             }
             else {
-              const clonedShape = protoFac.createShape({shape: active.type , color : active.get("stroke") ,height: active.get("height")*active.get("scaleY")  , width: active.get("width")*active.get("scaleX")  , radius: active.get("radius") , strokeWidth: active.get("strokeWidth") , fillColor: active.get("fill")});  
+              const clonedShape = protoFac.createShape({shape: active.type , color : active.get("stroke") ,height: active.get("height")*active.get("scaleY")  , width: active.get("width")*active.get("scaleX")  , radius: active.get("radius")*active.get("scaleX") , strokeWidth: active.get("strokeWidth") , fillColor: active.get("fill")});  
               console.log(active.type);
             // const myClonedShape = clonedShape.create(color);
               canvas.current.add(clonedShape)
