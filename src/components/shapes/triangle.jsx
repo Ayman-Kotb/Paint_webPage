@@ -2,16 +2,15 @@ import { Triangle } from "fabric"
 import Shape from "./Shape"
 
 class myTriangle extends Shape {
-    type= "triangle";
-    create(color , width=100 , height=100){
-        const strokeWidth = 0
+    create(color , width=100 , height=100, strokeWidth=3){
         return new Triangle({
             top: 100,
             left: 100,
-            width: width-strokeWidth,
-            height: height-strokeWidth,
-            fill: `${color}`,
-            stroke: null, 
+            width: width,
+            height: height,
+            fill: "white",
+            stroke: color, 
+            strokeWidth: strokeWidth,
             originX: "left",
             originY: "top",
             scaleX: 1,

@@ -31,7 +31,7 @@ function CanvasAdjust({ canvas }) {
                     onChange={(e)=>changeHeight(e)}
                 />
                 <label>{height}</label>
-                <br/>
+                <br/><br/>
                 <label>width: </label>
                 <input 
                     type="range"

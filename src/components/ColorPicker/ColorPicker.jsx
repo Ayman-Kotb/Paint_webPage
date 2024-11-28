@@ -8,7 +8,6 @@ function ColorPicker({ color, setColor, canvas}) {
         const active = canvas.current.getActiveObjects()
         if(active){
             active.forEach((obj) => {
-              obj.set('fill', theColor);
               obj.set('stroke', theColor);
             })
             canvas.current.renderAll();

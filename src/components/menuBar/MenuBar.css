@@ -34,3 +34,36 @@
     background-color: rgba(197, 0, 0, 0.767); ;
     color: rgb(255, 255, 255);
   }
+
+  .toolbox{
+    position: fixed;
+    right: 0;
+    top: 15%;
+    border: 1px solid rgb(0, 0, 0);
+    color: black;
+    border-radius: 10px;
+    background-color: hsla(173, 100%, 29%, 0.333);
+    padding: 10px 15px 30px 15px;
+    width: 210px;
+    height: fit-content;
+  }
+  .toolbox p{
+    font-size: 25px;
+    margin: 5px 0px 20px 0px;
+    background-color: hsla(160, 100%, 85%, 0.626);
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.toolbox label{
+    color: rgb(255, 255, 255);
+}
+
+.picker{
+  height: 40px;
+  width: 40px;
+  margin: 5px;
+  cursor: pointer;
+  border: 5px solid rgb(0, 0, 0);
+  border-radius: 15px;
+}

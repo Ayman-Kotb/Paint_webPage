@@ -1,13 +1,12 @@
 import Shape from "./Shape"
 import { Line } from "fabric"
 class myLine extends Shape {
-    type= "line";
-    create(color){
+    create(color, strokeWidth=3){
         return new Line(
             [50 ,50 ,200 ,200],
             {
-                stroke:`${color}`,
-                strokeWidth: 3,
+                stroke:color,
+                strokeWidth: strokeWidth,
                 type: "line",
             }
         )
