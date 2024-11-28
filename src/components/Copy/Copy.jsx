@@ -7,8 +7,19 @@ import myTriangle from "../shapes/triangle.jsx";
 function Copy({canvas , color}){
     const protoFac = new shapeFactory();
     const CopySelected = () => {
-        const active = canvas.current.getActiveObject()
+        const active = canvas.current.getActiveObject();
+       
         if(active){
+
+          if (active instanceof fabric.Path) {
+            active.clone((clonedPath) => {
+                canvas.current.add(clonedPath);
+            });
+            return;
+        }
+        
+        
+
             if (active.type === "rect"){
               const clonedShape = protoFac.createShape({shape: "rectangle" , color : active.color ,height: active.height , width: active.width , radius: active.radius});
               console.log(active.type);
