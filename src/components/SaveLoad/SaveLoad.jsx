@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 function SaveLoad({ canvas }) {
-  
   const saveCanvasAsJSON = () => {
     if (!canvas.current) return;
     const canvasData = canvas.current.toJSON();
@@ -41,7 +41,6 @@ function SaveLoad({ canvas }) {
     link.click();
   };
 
- 
   const loadCanvasFromJSON = (event) => {
     const file = event.target.files[0]; // Get the selected file
     if (file) {
@@ -50,18 +49,14 @@ function SaveLoad({ canvas }) {
         try {
           const loadedData = JSON.parse(reader.result);
 
-        
           canvas.current.loadFromJSON(loadedData, () => {
-        
-            canvas.current.renderAll(); 
-          
+            canvas.current.renderAll();
           });
 
           // Optional: Force a slight delay to ensure render is immediate
           setTimeout(() => {
-            canvas.current.renderAll(); 
+            canvas.current.renderAll();
           }, 0);
-
         } catch (error) {
           alert("Failed to load the canvas. Invalid JSON file.");
           console.error("Error loading JSON:", error);
@@ -71,19 +66,58 @@ function SaveLoad({ canvas }) {
     }
   };
 
+  // Save the canvas state to the backend
+  async function saveCanvasState(canvasJson) {
+    try {
+      await axios.post("http://localhost:8080/api/canvas/save", canvasJson, {
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.error("Failed to save canvas state:", error);
+    }
+  }
+  useEffect(() => {
+    if (!canvas.current) return;
+    // Add event listener for changes on the Fabric.js canvas
+    canvas.current.on("object:added", handleSave);
+    canvas.current.on("object:modified", handleSave);
+    canvas.current.on("object:removed", handleSave);
+
+    // Cleanup the event listeners on component unmount
+    return () => {
+      canvas.current.off("object:added", handleSave);
+      canvas.current.off("object:modified", handleSave);
+      canvas.current.off("object:removed", handleSave);
+    };
+  });
+
+  function handleSave() {
+    const canvasJson = canvas.current.toJSON();
+    const jsonString = JSON.stringify(canvasJson, null, 2);
+    console.log(jsonString);
+    saveCanvasState(jsonString);
+  }
+
   return (
     <div className="container">
-      <button onClick={saveCanvasAsJSON} className="button">💾 Save</button>
-      
+      <button onClick={saveCanvasAsJSON} className="button">
+        💾 Save
+      </button>
+
       {}
       <input
         type="file"
         accept="application/json"
         onChange={loadCanvasFromJSON}
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
         id="loadCanvasInput"
       />
-      <button onClick={() => document.getElementById("loadCanvasInput").click()} className="button">📂 Load</button>
+      <button
+        onClick={() => document.getElementById("loadCanvasInput").click()}
+        className="button"
+      >
+        📂 Load
+      </button>
     </div>
   );
 }
