@@ -33,6 +33,9 @@ function CanvasComponent({ canvas}) {
       if (!path.shouldStartDragging) {
         path.shouldStartDragging = () => false;
       }
+
+      canvas.current.add(path);
+      handleSave({canvas});
       canvas.current.renderAll();
     });
     return () => {

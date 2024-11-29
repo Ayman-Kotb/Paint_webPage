@@ -26,7 +26,7 @@ function UndoRedo({ canvas}) {
         canvas.current.renderAll();
       }, 0);
     } catch (error) {
-      console.error(error);
+      window.alert("you did nothing to undo 🗿");
     }
   }
 
@@ -51,7 +51,7 @@ function UndoRedo({ canvas}) {
         canvas.current.renderAll();
       }, 0);
     } catch (error) {
-      console.error(error);
+      window.alert("you undid nothing to redo 🗿");
     }
   }
 

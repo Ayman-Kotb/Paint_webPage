@@ -25,7 +25,7 @@ function CanvasAdjust({ canvas }) {
                 <input 
                     type="range"
                     min="100" 
-                    max="700" 
+                    max="720" 
                     step="1" 
                     value={height} 
                     onChange={(e)=>changeHeight(e)}

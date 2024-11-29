@@ -22,8 +22,6 @@ function FreeHand({ canvas, color , size, setSize }) {
             obj.selectable = false;
             obj.evented = false;
         });
-
-        handleSave({canvas});
         canvas.current.renderAll();
     };
 
@@ -32,6 +30,7 @@ function FreeHand({ canvas, color , size, setSize }) {
 
         canvas.current.isDrawingMode = false; // Disable drawing mode
         canvas.current.selection = true; // Enable selection
+        canvas.current.freeDrawingBrush = null;
     
         // Ensure all objects are properly interactive
         canvas.current.forEachObject((obj) => {
@@ -43,6 +42,7 @@ function FreeHand({ canvas, color , size, setSize }) {
                 lockScalingX: false,
                 lockScalingY: false,
                 lockRotation: false,
+                lockUniScaling: false,
             });
     
             // Add fallback methods to prevent errors
@@ -56,8 +56,6 @@ function FreeHand({ canvas, color , size, setSize }) {
                 obj.onDragStart = () => {};
             }
         });
-        
-        handleSave({canvas});
         canvas.current.renderAll();
     };
 
@@ -66,7 +64,6 @@ function FreeHand({ canvas, color , size, setSize }) {
         setSize(newSize);
         if (canvas.current.freeDrawingBrush) {
             canvas.current.freeDrawingBrush.width = newSize;
-
             handleSave({canvas});
             canvas.current.renderAll();
         }

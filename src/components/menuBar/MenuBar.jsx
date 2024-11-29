@@ -16,7 +16,7 @@ function MenuBar({ canvas }) {
     return (
         <div className="menuBar_container">
             <ColorPicker color={color} setColor={setColor} canvas={canvas} /> {/* Pass color and setColor to ColorPicker */}
-            <Buttons canvas={canvas} color={color} size={size} /> {/* Pass size to Buttons */}
+            <Buttons canvas={canvas} color={color} /> {/* Pass size to Buttons */}
             <FreeHand canvas={canvas} color={color} size={size} setSize={setSize} /> {/* Pass size to FreeHand */}  
             <SaveLoad canvas={canvas}/>
             <Copy canvas={canvas}/>

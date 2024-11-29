@@ -1,6 +1,7 @@
 .colorDisplay_container{
     width: 100px;
     margin: 1px;
+    padding: 5px;
     display: flex;
     flex-direction: column;
     cursor: pointer;
