@@ -3,8 +3,8 @@ package com.paint.paintBack.Memento;
 import java.util.Stack;
 
 public class History {
-    public Stack<EditorState> Back = new Stack<EditorState>();
-    public Stack<EditorState> Forward = new Stack<EditorState>();
+    private Stack<EditorState> Back = new Stack<EditorState>();
+    private Stack<EditorState> Forward = new Stack<EditorState>();
 
     public void push(EditorState state){
         Back.push(state);
