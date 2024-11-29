@@ -20,7 +20,7 @@ function MenuBar({ canvas }) {
             <SaveLoad canvas={canvas}/>
             <Copy canvas={canvas}/>
             <Delete canvas={canvas} />
-            <UndoRedo />
+            <UndoRedo canvas={canvas}/>
             
         </div>
     );

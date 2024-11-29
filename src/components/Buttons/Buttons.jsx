@@ -174,6 +174,7 @@ canvas.current.requestRenderAll()
     }
   }, [canvas.current]);
 
+
   const handleSelection = () => {
     const activeObject = canvas.current.getActiveObject();
     if (!activeObject) return;

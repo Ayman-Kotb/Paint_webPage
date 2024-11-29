@@ -1,10 +1,10 @@
-package com.lab2.paint.back;
+package com.paint.paintBack;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApplicationTests {
+class PaintBackApplicationTests {
 
 	@Test
 	void contextLoads() {

@@ -8,11 +8,11 @@
 		<version>3.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.lab2</groupId>
-	<artifactId>paint.back</artifactId>
+	<groupId>com.paint</groupId>
+	<artifactId>paintBack</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>paint.back</name>
-	<description>back part of the paint web page</description>
+	<name>paintBack</name>
+	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -30,10 +30,6 @@
 		<java.version>23</java.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

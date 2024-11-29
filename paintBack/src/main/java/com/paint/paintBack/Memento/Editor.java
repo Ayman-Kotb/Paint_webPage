@@ -1,4 +1,4 @@
-package com.lab2.paint.back.Memento;
+package com.paint.paintBack.Memento;
 
 public class Editor {
     private String canvasState; // JSON string representing canvas

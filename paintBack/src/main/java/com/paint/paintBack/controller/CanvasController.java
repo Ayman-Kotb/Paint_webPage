@@ -1,8 +1,8 @@
-package com.lab2.paint.back.controller;
+package com.paint.paintBack.controller;
 
-import com.lab2.paint.back.Memento.Editor;
-import com.lab2.paint.back.Memento.EditorState;
-import com.lab2.paint.back.Memento.History;
+import com.paint.paintBack.Memento.Editor;
+import com.paint.paintBack.Memento.EditorState;
+import com.paint.paintBack.Memento.History;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,18 +16,16 @@ public class CanvasController {
         editor.setCanvasState(canvasJson);
         history.push(editor.createState());
     }
-
     @GetMapping("/undo")
     public String undo() {
         try {
-            EditorState previousState = history.undo();
-            editor.restore(previousState);
+            EditorState prevState = history.undo();
+            editor.restore(prevState);
             return editor.getCanvasState();
-        } catch (IllegalStateException e) {
-            return "Cannot undo";
+        }catch (Exception e){
+            throw new RuntimeException("cannot undo", e);
         }
     }
-
     @GetMapping("/redo")
     public String redo() {
         try {
@@ -35,7 +33,7 @@ public class CanvasController {
             editor.restore(nextState);
             return editor.getCanvasState();
         } catch (IllegalStateException e) {
-            return "Cannot redo";
+            throw new RuntimeException("cannot redo", e);
         }
     }
 }
