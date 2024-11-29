@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import shapeFactory from "../shapeFactory/ShapeFactory";
+import { handleSave } from "../SaveStateToBack/SaveStateToBack";
 
 function Buttons({ canvas, color }) {
   const factory = useRef(null);
@@ -35,6 +36,7 @@ function Buttons({ canvas, color }) {
     canvas.current.add(shape);
     canvas.current.setActiveObject(shape);
     handleSelection({ target: shape }); // Simulate selection after adding
+    handleSave({canvas});
     canvas.current.renderAll();
   };
   
@@ -96,6 +98,7 @@ function Buttons({ canvas, color }) {
       selectedShape.set(property, value);
     }
     setProperties((prev) => ({ ...prev, [property]: value }));
+    handleSave({canvas});
     canvas.current.renderAll();
   };
 

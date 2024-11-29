@@ -1,6 +1,7 @@
 
 import { BsBrushFill } from "react-icons/bs";
 import { IoStop } from "react-icons/io5"; // Stop icon
+import { handleSave } from "../SaveStateToBack/SaveStateToBack";
 
 function FreeHand({ canvas, color , size, setSize }) {
 
@@ -22,6 +23,7 @@ function FreeHand({ canvas, color , size, setSize }) {
             obj.evented = false;
         });
 
+        handleSave({canvas});
         canvas.current.renderAll();
     };
 
@@ -54,7 +56,8 @@ function FreeHand({ canvas, color , size, setSize }) {
                 obj.onDragStart = () => {};
             }
         });
-   
+        
+        handleSave({canvas});
         canvas.current.renderAll();
     };
 
@@ -63,6 +66,8 @@ function FreeHand({ canvas, color , size, setSize }) {
         setSize(newSize);
         if (canvas.current.freeDrawingBrush) {
             canvas.current.freeDrawingBrush.width = newSize;
+
+            handleSave({canvas});
             canvas.current.renderAll();
         }
     };
