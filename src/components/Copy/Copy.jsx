@@ -34,7 +34,9 @@ function Copy({canvas}){
             height: active.get("height")*active.get("scaleY"),
             width: active.get("width")*active.get("scaleX"),
             radius: active.get("radius")*active.get("scaleX"),
-            strokeWidth: active.get("strokeWidth"),
+            rx : active.get("rx")*active.get("scaleX"),
+            ry : active.get("ry")*active.get("scaleY"),
+            strokeWidth: active.get("strokeWidth")*active.get("scaleY"),
             fillColor: active.get("fill")
           });
 
