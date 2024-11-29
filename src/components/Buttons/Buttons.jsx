@@ -3,13 +3,13 @@ import shapeFactory from "../shapeFactory/ShapeFactory";
 
 function Buttons({ canvas, color }) {
   const factory = useRef(null);
-
+  const lineRef = useRef(null);
   // Initialize Shape Factory
   useEffect(() => {
     const myFactory = new shapeFactory();
     factory.current = myFactory;
   }, []);
-
+  const [isLine, setIsLine] = useState(false);
   const [selectedShape, setSelectedShape] = useState(null); // Track the selected shape
   const [properties, setProperties] = useState({
     width: 0,
@@ -20,10 +20,9 @@ function Buttons({ canvas, color }) {
   });
 
   // Add Shape to Canvas
-  const addShape = ({ typeOfShape, radius = 0, width = 0,strokeWidth = 3, height = 0 }) => {
+  const addShape = ({ typeOfShape, radius = 0, width = 0,strokeWidth = 3, height = 0 , x1=100 , y1=100 , x2 =200, y2=200}) => {
     if (!canvas.current) return;
-
-    // Create the shape
+    setIsLine(false);
     const shape = factory.current.createShape({
       shape: typeOfShape,
       color: color,
@@ -31,12 +30,124 @@ function Buttons({ canvas, color }) {
       width: width,
       strokeWidth: strokeWidth,
       height: height,
+      x1: x1,
+      x2: x2,
+      y1: y1,
+      y2: y2,
     });
     canvas.current.add(shape);
     canvas.current.setActiveObject(shape);
     handleSelection({ target: shape }); // Simulate selection after adding
     canvas.current.renderAll();
   };
+  const handleEscape = (event) => {
+      if (event.key === "Escape") {
+        dis();
+        window.removeEventListener("keydown", handleEscape);
+      }
+    };
+    const makeLine = () => {
+    setIsLine(true);
+    
+    canvas.current.on("mouse:down", startAddingLine);
+    canvas.current.on("mouse:move", startDrawingLine);
+    canvas.current.on("mouse:up", stopDrawingLine);
+    window.addEventListener("keydown", handleEscape);
+    
+  };
+  const dis=() => {
+    canvas.current.off("mouse:down");
+    canvas.current.off("mouse:move", startDrawingLine);
+    canvas.current.off("mouse:up", stopDrawingLine);
+
+    window.removeEventListener("keydown", handleEscape);
+    canvas.current.getObjects().forEach((obj) => {
+      obj.set({
+      selectable: true, 
+        evented: true,
+        hasBorders: false,        // Disable default borders if using custom controls
+        hasControls: true,        // Enable custom control visibility
+        lockScalingX: true,       // Prevent default scaling
+        lockScalingY: true,
+        lockMovementX: false,     // Allow movement
+        lockMovementY: false,
+      })
+      if (!obj.getActiveControl) {
+          obj.getActiveControl = () => null;
+      }
+      if (!obj.shouldStartDragging) {
+          obj.shouldStartDragging = () => false;
+      }
+      if (!obj.onDragStart) {
+          obj.onDragStart = () => {};
+      }
+    });
+  }
+  const startAddingLine = (event) => {
+    if (!isLine || event.e.button !== 0) return;
+    canvas.current.selection = false;
+    canvas.current.forEachObject((obj) => obj.set("selectable", false)); 
+    const pointer = canvas.current.getPointer(event.e); 
+    const newLine = new fabric.Line([pointer.x, pointer.y, pointer.x, pointer.y], {
+      stroke:color,
+      strokeWidth: 3,
+      type: "line",
+      selectable: false, 
+      evented: false, 
+    });
+
+    lineRef.current = newLine;
+    console.log(lineRef.current)
+    canvas.current.add(newLine);
+    canvas.current.requestRenderAll()
+  };
+
+  const startDrawingLine = (event) => {
+    if (!lineRef.current || event.e.button !== 0) return;
+
+    const pointer = canvas.current.getPointer(event.e); 
+    lineRef.current.set({ x2: pointer.x, y2: pointer.y }); 
+    canvas.current.renderAll(); 
+  };
+
+  const stopDrawingLine = () => {
+  if (!lineRef.current ) return;
+  console.log(lineRef.current)
+  lineRef.current.set({
+    selectable: true,
+    evented: true,
+        hasBorders: false,        // Disable default borders if using custom controls
+        hasControls: true,        // Enable custom control visibility
+        lockScalingX: true,       // Prevent default scaling
+        lockScalingY: true,
+        lockMovementX: false,     // Allow movement
+        lockMovementY: false,
+  });
+  if (!lineRef.current.getActiveControl) {
+    lineRef.current.getActiveControl = () => null;
+}
+if (!lineRef.current.getRelativeCenterPoint) {
+  lineRef.current.getRelativeCenterPoint = () => false;
+}
+if (!lineRef.current.get("type")=== undefined) {
+  lineRef.current.set("type" ,"line") 
+}
+if (!lineRef.current.findControl) {
+  lineRef.current.findControl = () => true;
+}
+if (!lineRef.current.shouldStartDragging) {
+    lineRef.current.shouldStartDragging = () => false;
+}
+if (!lineRef.current.onDragStart) {
+    lineRef.current.onDragStart = () => {};
+}
+  //lineRef.current.setCoords();
+  lineRef.current = null;  // Reset reference to line
+  setIsLine(false);  // Exit drawing mode
+  canvas.current.selection = true;  // Re-enable selection
+canvas.current.requestRenderAll()
+};
+
   
   // Handle Shape Selection
   useEffect(() => {
@@ -101,7 +212,7 @@ function Buttons({ canvas, color }) {
   return (
     <div className="container">
       <button onClick={() => addShape({ typeOfShape: "circle" })} className="button">⚫</button>
-      <button onClick={() => addShape({typeOfShape: "line"})} className="button">📏</button>
+      <button onClick={() => makeLine()} className="button">📏</button>
       <button onClick={() => addShape({ typeOfShape: "rectangle" })} className="button">🟦</button>
       <button onClick={() => addShape({ typeOfShape: "triangle" })} className="button">🔺</button>
 

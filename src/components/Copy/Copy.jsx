@@ -12,7 +12,6 @@ function Copy({canvas}){
             const jsonRepresentation = active.toObject(['shouldStartDragging', 'getActiveControl', 'onDragStart', 'canDrop']); // Include custom properties
 
             fabric.util.enlivenObjects([jsonRepresentation], ([clonedObject]) => {
-
               clonedObject.shouldStartDragging = active.shouldStartDragging || (() => false);
               clonedObject.getActiveControl = active.getActiveControl || (() => null);
               clonedObject.onDragStart = active.onDragStart || (() => {});
@@ -22,14 +21,9 @@ function Copy({canvas}){
                 ...active, 
                 left: active.left + 10, 
                 top: active.top + 10,
-              });
-          
-              
+              });    
               canvas.current.add(clonedObject);
-        
               canvas.current.setActiveObject(clonedObject);
-          
-          
               console.log(canvas.current.getObjects());
             });
             return ;
