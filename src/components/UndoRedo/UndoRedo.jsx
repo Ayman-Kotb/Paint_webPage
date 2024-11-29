@@ -2,7 +2,6 @@ import axios from "axios";
 
 function UndoRedo({ canvas}) {
 
-
   // Undo action
   async function undo() {
     try {
@@ -15,7 +14,7 @@ function UndoRedo({ canvas}) {
       }
 
       const jsonString = JSON.stringify(data, null, 2);
-      console.log(jsonString);
+      // console.log(jsonString);
       const jsonData = JSON.parse(jsonString);
       //console.log(jsonData);
 

@@ -83,9 +83,9 @@ function Buttons({ canvas, color }) {
   const handleSelection = () => {
     const activeObject = canvas.current.getActiveObject();
     if (!activeObject) return;
-    console.log(activeObject.type)
-    console.log(activeObject.get("width"))
-    console.log(activeObject.get("height"))
+    // console.log(activeObject.type)
+    // console.log(activeObject.get("width"))
+    // console.log(activeObject.get("height"))
     setSelectedShape(activeObject);
     setProperties({
       width: activeObject.width * activeObject.scaleX || 0,
@@ -97,6 +97,7 @@ function Buttons({ canvas, color }) {
       strokeWidth: activeObject.strokeWidth || 3,
       fill: activeObject.fill || "#FFFFFF",
     });
+    handleSave({canvas});
     canvas.current.renderAll();
   };
 

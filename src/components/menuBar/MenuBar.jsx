@@ -9,7 +9,7 @@ import UndoRedo from "../UndoRedo/UndoRedo.jsx";
 import Copy from "../Copy/Copy.jsx";
 
 
-function MenuBar({ canvas, undoRedoFlag }) {
+function MenuBar({ canvas }) {
     const [color, setColor] = useState("#000000"); // Manage color state in MenuBar
     const [size, setSize] = useState(5); // Manage size state in MenuBar
 
