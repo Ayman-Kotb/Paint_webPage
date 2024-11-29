@@ -18,6 +18,9 @@ function Buttons({ canvas, color }) {
     width: 0,
     height: 0,
     radius: 0,
+    side:0 ,
+    rx:0 ,
+    ry:0 ,
     strokeWidth: 3,
     fill: "#FFFFFF",
   });
@@ -38,6 +41,8 @@ function Buttons({ canvas, color }) {
       y1: y1,
       y2: y2,
     });
+    if (shape.get("width")===shape.get("height")) shape.set("type", "square")
+    console.log(shape)
     canvas.current.add(shape);
     canvas.current.setActiveObject(shape);
     handleSelection({ target: shape }); // Simulate selection after adding
@@ -55,6 +60,9 @@ function Buttons({ canvas, color }) {
         width: 0,
         height: 0,
         radius: 0,
+        side :0 ,
+        rx :0,
+        ry :0,
         strokeWidth: 3,
         fill: "#FFFFFF",
       });
@@ -75,10 +83,16 @@ function Buttons({ canvas, color }) {
   const handleSelection = () => {
     const activeObject = canvas.current.getActiveObject();
     if (!activeObject) return;
+    console.log(activeObject.type)
+    console.log(activeObject.get("width"))
+    console.log(activeObject.get("height"))
     setSelectedShape(activeObject);
     setProperties({
       width: activeObject.width * activeObject.scaleX || 0,
       height: activeObject.height * activeObject.scaleY || 0,
+      rx: activeObject.rx * activeObject.scaleX || 0,
+      ry: activeObject.ry * activeObject.scaleY || 0,
+      side :activeObject.width * activeObject.scaleX || 0,
       radius: activeObject.radius || 0,
       strokeWidth: activeObject.strokeWidth || 3,
       fill: activeObject.fill || "#FFFFFF",
@@ -97,7 +111,18 @@ function Buttons({ canvas, color }) {
       }
     } else if (property === "radius") {
       selectedShape.set("radius", value);
-    } else if (property === "strokeWidth") {
+    } else if (property === "side") {
+      selectedShape.set("width", value);
+      selectedShape.set("height", value);
+    } else if (property === "rx" || property === "ry"){
+      const scaleValue = value / (property === "rx" ? selectedShape.rx : selectedShape.ry);
+      if (property === "rx") {
+        selectedShape.scaleX = scaleValue;
+      } else {
+        selectedShape.scaleY = scaleValue;
+      }
+    }
+     else if (property === "strokeWidth") {
       selectedShape.set("strokeWidth", value);
     } 
     else {
@@ -110,16 +135,18 @@ function Buttons({ canvas, color }) {
 
   return (
     <div className="container">
-      <button onClick={() => (addShape({ typeOfShape: "circle" }))} className="button">⚫</button>
-      <button onClick={() => makeLine(canvas.current, color, setIsLine, lineRef)} className="button">📏</button>
-      <button onClick={() => (addShape({ typeOfShape: "rectangle" }))} className="button">🟦</button>
-      <button onClick={() => (addShape({ typeOfShape: "triangle" }))} className="button">🔺</button>
+      <button onClick={() => addShape({ typeOfShape: "circle" })} title="Circle" className="button">⚫</button>
+      <button onClick={() => addShape({ typeOfShape: "ellipse" })} title="Ellipse" className="button">⬭</button>
+      <button onClick={() => makeLine(canvas.current, color, setIsLine, lineRef)} title="Line" className="button">📏</button>
+      <button onClick={() => addShape({ typeOfShape: "rectangle" })} title="Rectangle" className="button">█</button>
+      <button onClick={() => addShape({ typeOfShape: "square" })} title="Square"className="button">⬛</button>
+      <button onClick={() => addShape({ typeOfShape: "triangle" })} title="Triangle" className="button">🔺</button>
 
       {/* Toolbox for Selected Shape Properties */}
       {selectedShape && (
         <div className="toolbox">
           <p>Edit Shape Properties</p>
-          {(selectedShape.type === "rect" || selectedShape.type === "triangle") && (
+          {(selectedShape.type === "rect" || selectedShape.type === "triangle") && ( selectedShape.get("width")!== selectedShape.get("height") ) && (
             <>
               <label>
                 Width:
@@ -163,6 +190,51 @@ function Buttons({ canvas, color }) {
               <label>{Math.round(properties.radius*selectedShape.get("scaleX"))}</label>
               <br/><br/>
             </label>
+          )}
+          {selectedShape.type === "rect" && selectedShape.get("width")===selectedShape.get("height") && (
+            <label>
+              Side:
+              <input
+                type="range"
+                min="10"
+                max={canvas.current.getWidth()/2}
+                step="1"
+                value={properties.side}
+                onChange={(e) => updateProperty("side", Number(e.target.value))}
+              />
+              <label>{Math.round(properties.side*selectedShape.get("scaleX"))}</label>
+              <br/><br/>
+            </label>
+          )}
+          {selectedShape.type === "ellipse" && (
+            <>
+            <label>
+              RadiusX:
+              <input
+                type="range"
+                min="10"
+                max={canvas.current.getWidth()/2}
+                step="1"
+                value={properties.rx}
+                onChange={(e) => updateProperty("rx", Number(e.target.value))}
+              />
+              <label>{Math.round(properties.rx*selectedShape.get("scaleX"))}</label>
+              <br/><br/>
+            </label>
+            <label>
+              RadiusY:
+              <input
+                type="range"
+                min="10"
+                max={canvas.current.getWidth()/2}
+                step="1"
+                value={properties.ry}
+                onChange={(e) => updateProperty("ry", Number(e.target.value))}
+              />
+              <label>{Math.round(properties.ry*selectedShape.get("scaleY"))}</label>
+              <br/><br/>
+            </label>
+            </>
           )}
           <label>
               StrokeWidth:
