@@ -1,3 +1,5 @@
+import { handleSave } from "../SaveStateToBack/SaveStateToBack";
+
 function Delete({canvas}){
     const deleteSelected = () => {
       const active = canvas.current.getActiveObjects()
@@ -6,6 +8,8 @@ function Delete({canvas}){
           canvas.current.remove(obj);
         })
         canvas.current.discardActiveObject()
+
+        handleSave({canvas})
         canvas.current.renderAll();
       }
     }

@@ -8,7 +8,8 @@ import Delete from "../Delete/Delete.jsx";
 import UndoRedo from "../UndoRedo/UndoRedo.jsx";
 import Copy from "../Copy/Copy.jsx";
 
-function MenuBar({ canvas }) {
+
+function MenuBar({ canvas, undoRedoFlag }) {
     const [color, setColor] = useState("#000000"); // Manage color state in MenuBar
     const [size, setSize] = useState(5); // Manage size state in MenuBar
 

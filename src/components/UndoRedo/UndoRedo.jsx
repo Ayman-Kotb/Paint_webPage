@@ -1,6 +1,6 @@
 import axios from "axios";
 
-function UndoRedo({ canvas }) {
+function UndoRedo({ canvas}) {
 
 
   // Undo action
@@ -10,16 +10,21 @@ function UndoRedo({ canvas }) {
       const data = response.data;
 
       if (data.error) {
-        console.error("undo Error: ",data.error); // Log error from backend
+        console.error("redo Error: ",data.error); // Log error from backend
         return;
       }
+
       const jsonString = JSON.stringify(data, null, 2);
-      console.log(typeof jsonString);
+      console.log(jsonString);
       const jsonData = JSON.parse(jsonString);
       //console.log(jsonData);
+
       canvas.current.loadFromJSON(jsonData, () => {
         canvas.current.renderAll(); // Render the updated canvas state
       });
+      setTimeout(() => {
+        canvas.current.renderAll();
+      }, 0);
     } catch (error) {
       console.error(error);
     }
@@ -35,12 +40,15 @@ function UndoRedo({ canvas }) {
         console.error("redo Error: ",data.error); // Log error from backend
         return;
       }
-      // console.log(data);
-      const jsonData = JSON.parse(data);
-      // console.log(jsonData);
+      const jsonString = JSON.stringify(data, null, 2);
+      console.log(jsonString);
+      const jsonData = JSON.parse(jsonString);
       canvas.current.loadFromJSON(jsonData, () => {
         canvas.current.renderAll(); // Render the updated canvas state
       });
+      setTimeout(() => {
+        canvas.current.renderAll();
+      }, 0);
     } catch (error) {
       console.error(error);
     }

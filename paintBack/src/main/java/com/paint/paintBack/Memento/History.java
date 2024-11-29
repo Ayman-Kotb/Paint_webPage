@@ -3,8 +3,8 @@ package com.paint.paintBack.Memento;
 import java.util.Stack;
 
 public class History {
-    private Stack<EditorState> Back = new Stack<EditorState>();
-    private Stack<EditorState> Forward = new Stack<EditorState>();
+    public Stack<EditorState> Back = new Stack<EditorState>();
+    public Stack<EditorState> Forward = new Stack<EditorState>();
 
     public void push(EditorState state){
         Back.push(state);
@@ -27,6 +27,10 @@ public class History {
         }else {
             throw new IllegalStateException("Cannot redo");
         }
+    }
+    public void clear(){
+        Back.clear();
+        Forward.clear();
     }
 
     public boolean isEmpty() {

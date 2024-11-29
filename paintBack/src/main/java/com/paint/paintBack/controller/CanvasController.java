@@ -20,20 +20,34 @@ public class CanvasController {
     public String undo() {
         try {
             EditorState prevState = history.undo();
+
+            System.out.println("undone state: \n"+history.Forward.peek().getContent());
+            System.out.println("forward size: "+history.Forward.size());
+
             editor.restore(prevState);
+            System.out.println("current state: \n"+editor.getCanvasState());
+
             return editor.getCanvasState();
         }catch (Exception e){
-            throw new RuntimeException("cannot undo", e);
+            return "Can't undo due to empty stack";
         }
     }
     @GetMapping("/redo")
     public String redo() {
         try {
             EditorState nextState = history.redo();
+            System.out.println("redone state: \n"+nextState.getContent());
+            System.out.println("forward size after redoing: "+history.Forward.size());
             editor.restore(nextState);
             return editor.getCanvasState();
-        } catch (IllegalStateException e) {
-            throw new RuntimeException("cannot redo", e);
+        } catch (Exception e) {
+            System.out.println("empty");
+            return "Can't redo due to empty stack";
         }
+    }
+    @DeleteMapping("/clearHistory")
+    public void clearHistory() {
+        history.clear();
+        System.out.println("History cleared.");
     }
 }

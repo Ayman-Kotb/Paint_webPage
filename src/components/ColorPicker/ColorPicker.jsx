@@ -1,3 +1,4 @@
+import { handleSave } from "../SaveStateToBack/SaveStateToBack";
 import ColorDisplay from "./ColorDisplay";
 import "./ColorPicker.css";
 
@@ -10,10 +11,14 @@ function ColorPicker({ color, setColor, canvas}) {
             active.forEach((obj) => {
               obj.set('stroke', theColor);
             })
+
+            handleSave({canvas})
             canvas.current.renderAll();
         }
         if (canvas.current.freeDrawingBrush) {
             canvas.current.freeDrawingBrush.color = theColor;
+
+            handleSave({canvas})
             canvas.current.renderAll();
         }
     }
