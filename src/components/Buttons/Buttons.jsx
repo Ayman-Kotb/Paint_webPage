@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import shapeFactory from "../shapeFactory/ShapeFactory";
+import { makeLine } from "./Line";
+import { stopLineDrawingMode } from "./Line";
 import { handleSave } from "../SaveStateToBack/SaveStateToBack";
 
 function Buttons({ canvas, color }) {
   const factory = useRef(null);
-
+  const lineRef = useRef(null);
   // Initialize Shape Factory
   useEffect(() => {
     const myFactory = new shapeFactory();
     factory.current = myFactory;
   }, []);
-
+  const [isLine, setIsLine] = useState(false);
   const [selectedShape, setSelectedShape] = useState(null); // Track the selected shape
   const [properties, setProperties] = useState({
     width: 0,
@@ -21,10 +23,9 @@ function Buttons({ canvas, color }) {
   });
 
   // Add Shape to Canvas
-  const addShape = ({ typeOfShape, radius = 0, width = 0,strokeWidth = 3, height = 0 }) => {
+  const addShape = ({ typeOfShape, radius = 0, width = 0,strokeWidth = 3, height = 0 , x1=100 , y1=100 , x2 =200, y2=200}) => {
     if (!canvas.current) return;
-
-    // Create the shape
+    setIsLine(false);
     const shape = factory.current.createShape({
       shape: typeOfShape,
       color: color,
@@ -32,6 +33,10 @@ function Buttons({ canvas, color }) {
       width: width,
       strokeWidth: strokeWidth,
       height: height,
+      x1: x1,
+      x2: x2,
+      y1: y1,
+      y2: y2,
     });
     canvas.current.add(shape);
     canvas.current.setActiveObject(shape);
@@ -39,6 +44,7 @@ function Buttons({ canvas, color }) {
     handleSave({canvas});
     canvas.current.renderAll();
   };
+  
   
   // Handle Shape Selection
   useEffect(() => {
@@ -104,10 +110,10 @@ function Buttons({ canvas, color }) {
 
   return (
     <div className="container">
-      <button onClick={() => addShape({ typeOfShape: "circle" })} className="button">⚫</button>
-      <button onClick={() => addShape({typeOfShape: "line"})} className="button">📏</button>
-      <button onClick={() => addShape({ typeOfShape: "rectangle" })} className="button">🟦</button>
-      <button onClick={() => addShape({ typeOfShape: "triangle" })} className="button">🔺</button>
+      <button onClick={() => (addShape({ typeOfShape: "circle" }))} className="button">⚫</button>
+      <button onClick={() => makeLine(canvas.current, color, setIsLine, lineRef)} className="button">📏</button>
+      <button onClick={() => (addShape({ typeOfShape: "rectangle" }))} className="button">🟦</button>
+      <button onClick={() => (addShape({ typeOfShape: "triangle" }))} className="button">🔺</button>
 
       {/* Toolbox for Selected Shape Properties */}
       {selectedShape && (

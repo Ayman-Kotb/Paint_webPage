@@ -1,4 +1,4 @@
-
+import { stopLineDrawingMode } from "../Buttons/Line";
 import { BsBrushFill } from "react-icons/bs";
 import { IoStop } from "react-icons/io5"; // Stop icon
 import { handleSave } from "../SaveStateToBack/SaveStateToBack";
@@ -74,7 +74,7 @@ function FreeHand({ canvas, color , size, setSize }) {
 
     return (
         <div className="container">
-            <button onClick={enablePencil} className="button">
+            <button onClick={(enablePencil)} className="button">
                 <BsBrushFill /> {/* Brush icon to start drawing */}
             </button>
             <button onClick={disablePencil} className="button">
