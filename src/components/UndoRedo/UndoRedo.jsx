@@ -22,6 +22,7 @@ function UndoRedo({ canvas}) {
       canvas.current.loadFromJSON(jsonData, () => {
         canvas.current.renderAll(); // Render the updated canvas state
       });
+      clearTimeout();
       setTimeout(() => {
         canvas.current.renderAll();
       }, 0);
@@ -46,6 +47,7 @@ function UndoRedo({ canvas}) {
       canvas.current.loadFromJSON(jsonData, () => {
         canvas.current.renderAll(); // Render the updated canvas state
       });
+      clearTimeout();
       setTimeout(() => {
         canvas.current.renderAll();
       }, 0);

@@ -21,12 +21,22 @@ function SaveStateToBack() {
       console.error("Failed to save canvas state:", error);
     }
   }
+  function debounce(func, delay){
+    let timeOut;
+    return (...args)=>{
+        clearTimeout(timeOut);
+        timeOut = setTimeout(() => {
+            func(...args);
+        }, delay);
+    }
+  }
 
-export function handleSave({canvas}) {
+export const handleSave = debounce(({ canvas }) => {
     const canvasJson = canvas.current.toJSON();
     const jsonString = JSON.stringify(canvasJson, null, 2);
-    console.log(canvasJson);
+    console.log("Saving canvas state:", canvasJson);
     saveCanvasState(jsonString);
-}
+  }, 500); 
+
 
 export default SaveStateToBack;
