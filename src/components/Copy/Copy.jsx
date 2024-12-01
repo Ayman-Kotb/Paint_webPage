@@ -65,6 +65,11 @@ function Copy({ canvas }) {
       ry: active.get("ry") * active.get("scaleY"),
       strokeWidth: active.get("strokeWidth")*active.get("scaleX"),
       fillColor: active.get("fill"),
+      x1 : active.get("x1") ,
+      x2 : active.get("x2") ,
+      y1 : active.get("y1") ,
+      y2 : active.get("y2") ,
+      angle : active.get("angle"),
     });
 
     // Position the clone with an offset

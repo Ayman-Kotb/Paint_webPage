@@ -163,11 +163,11 @@ function ShapeToolBox({ properties, setProperties, selectedShape, canvas }) {
             updateProperty("strokeWidth", Number(e.target.value))
           }
         />
-        <label>{properties.strokeWidth}</label>
+        <label>{Math.round(properties.strokeWidth * selectedShape.get("scaleX"))}</label>
         <br />
         <br />
       </label>
-      {(selectedShape.type !== "path")&&<label>
+      {(selectedShape.type !== "path" && selectedShape.type!=="line")&&<label>
         Fill Color:
         <input
           className="picker"

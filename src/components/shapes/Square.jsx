@@ -2,8 +2,9 @@ import Shape from "./Shape"
 import { Rect } from "fabric"
 
 class Square extends Shape {
-    create(color, size = 100, strokeWidth = 3 , fillColor= "white") {
+    create(color, size = 100, strokeWidth = 3 , fillColor= "white" , angle=0 ) {
         return new Rect({
+            angle: angle ,
             top: 100,
             left: 100,
             fill: fillColor,
