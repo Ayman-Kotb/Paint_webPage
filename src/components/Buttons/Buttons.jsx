@@ -63,7 +63,7 @@ export const handleSelection = ({ canvas, setSelectedShape , setProperties}) => 
     ry: activeObject.ry * activeObject.scaleY || 0,
     side :activeObject.width * activeObject.scaleX || 0,
     radius: activeObject.radius || 0,
-    strokeWidth: activeObject.strokeWidth || 3,
+    strokeWidth: activeObject.strokeWidth*activeObject.scaleX || 3,
     fill: activeObject.fill || "#FFFFFF",
   });
   handleSave({canvas});

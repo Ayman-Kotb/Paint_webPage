@@ -62,6 +62,31 @@ const finalizeLine = (event, canvas, lineRef) => {
 // Function to stop the line-drawing mode
 export const stopLineDrawingMode = (canvas, setIsLine, lineRef) => {
   console.log("stopping line is called");
+  lineRef.current.set({
+    selectable: true,
+    evented: true,
+    hasControls: true,
+    hasBorders: true,
+    lockScalingX: false,
+    lockScalingY: false,
+    lockRotation: false,
+    strokeUniform: true
+});
+
+// Add required methods if they don't exist
+if (!lineRef.current.findControl) {
+    lineRef.current.findControl = () => null;
+}
+if (!lineRef.current.shouldStartDragging) {
+    lineRef.current.shouldStartDragging = () => false;
+}
+if (!lineRef.current.onDragStart) {
+    lineRef.current.onDragStart = () => {};
+}
+if (!lineRef.current.getActiveControl) {
+    lineRef.current.getActiveControl = () => null;
+}
+
   // Reset line reference
   lineRef.current = null;
 
@@ -81,6 +106,12 @@ export const stopLineDrawingMode = (canvas, setIsLine, lineRef) => {
   window.removeEventListener("keydown", handleEscape);
 
   // Re-render the canvas
+  const canvasJson = canvas.toJSON();
+        canvas.loadFromJSON(canvasJson);
+        clearTimeout();
+        setTimeout(() => {
+          canvas.renderAll();
+        }, 0);
   canvas.renderAll();
 };
 
@@ -89,4 +120,4 @@ const handleEscape = (event) => {
     dis();
     window.removeEventListener("keydown", handleEscape);
   }
-};ine
+};
