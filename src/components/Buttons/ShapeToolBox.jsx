@@ -167,7 +167,7 @@ function ShapeToolBox({ properties, setProperties, selectedShape, canvas }) {
         <br />
         <br />
       </label>
-      <label>
+      {(selectedShape.type !== "path")&&<label>
         Fill Color:
         <input
           className="picker"
@@ -175,7 +175,7 @@ function ShapeToolBox({ properties, setProperties, selectedShape, canvas }) {
           value={properties.fill}
           onChange={(e) => updateProperty("fill", e.target.value)}
         />
-      </label>
+      </label>}
     </div>
   );
 }

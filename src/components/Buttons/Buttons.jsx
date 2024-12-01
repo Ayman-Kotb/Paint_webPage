@@ -55,7 +55,6 @@ function Buttons({ canvas, color, selectedShape, setSelectedShape, properties, s
 export const handleSelection = ({ canvas, setSelectedShape , setProperties}) => {
   const activeObject = canvas.current.getActiveObject();
   if (!activeObject) return;
-  console.log(activeObject.type);
   setSelectedShape(activeObject);
   setProperties({
     width: activeObject.width * activeObject.scaleX || 0,

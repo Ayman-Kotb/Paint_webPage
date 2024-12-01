@@ -1,10 +1,11 @@
 import axios from "axios";
 
-function UndoRedo({ canvas}) {
+function UndoRedo({ canvas, setSelectedShape }) {
 
   // Undo action
   async function undo() {
     try {
+      setSelectedShape(null);
       const response = await axios.get('http://localhost:8080/api/canvas/undo');
       const data = response.data;
 
@@ -33,6 +34,7 @@ function UndoRedo({ canvas}) {
   // Redo action
   async function redo() {
     try {
+      setSelectedShape(null);
       const response = await axios.get('http://localhost:8080/api/canvas/redo');
       const data = response.data;
 

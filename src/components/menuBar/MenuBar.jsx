@@ -21,7 +21,7 @@ function MenuBar({ canvas, selectedShape, setSelectedShape, properties, setPrope
             <SaveLoad canvas={canvas}/>
             <Copy canvas={canvas}/>
             <Delete canvas={canvas} />
-            <UndoRedo canvas={canvas}/>
+            <UndoRedo canvas={canvas} setSelectedShape={setSelectedShape}/>
             
         </div>
     );
