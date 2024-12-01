@@ -1,25 +1,20 @@
 #canvas{
-    margin: 10px;
+    margin: 50px;
     border: 2px solid black;
-    border-radius: 20px;
+    border-radius: 40px;
     background-color: white;
     z-index: 2;
 }
-.canvasContainer{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 30px;
-}
+
 .canvasAdjustSize{
     border: 1px solid rgb(0, 0, 0);
     color: black;
     border-radius: 10px;
-    background-color: hsla(173, 100%, 29%, 0.333);
+    background-color: hsla(173, 100%, 67%, 0.333);
     padding: 10px;
     gap: 30px;
     position:fixed;
-    top: 60%;
+    top: 20%;
     right: 0;
     width: 220px;
     height: 180px;
@@ -28,7 +23,7 @@
 .canvasAdjustSize p{
     font-size: 25px;
     margin: 5px 0px 30px 0px;
-    background-color: hsla(160, 100%, 85%, 0.626);
+    background-color: hsla(168, 31%, 87%, 0.77);
     border-radius: 20px;
     padding: 12px;
 }

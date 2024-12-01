@@ -34,7 +34,7 @@ const startAddingLine = (event, canvas, color, lineRef) => {
 
 const startDrawingLine = (event, canvas, lineRef) => {
   if (!lineRef.current || event.e.button !== 0) return;
-
+  
   // Update the endpoint of the line to follow the mouse
   const pointer = canvas.getPointer(event.e);
   lineRef.current.set({
@@ -46,22 +46,9 @@ const startDrawingLine = (event, canvas, lineRef) => {
   canvas.renderAll();
 };
 
-const finalizeLine = (event, canvas, lineRef) => {
-  if (!lineRef.current) return;
-
-  // Finalize the current line's properties
-  lineRef.current.set({
-    selectable: true,
-    evented: true,
-  });
-
-  // Clear the reference for the current line to start a new one
-  lineRef.current = null;
-};
-
 // Function to stop the line-drawing mode
 export const stopLineDrawingMode = (canvas, setIsLine, lineRef) => {
-  console.log("stopping line is called");
+  // console.log("stopping line is called");
   lineRef.current.set({
     selectable: true,
     evented: true,

@@ -1,4 +1,4 @@
-import { makeLine } from "./Line";
+import { makeLine } from "../LineDrawing/LineDrawing";
 
 function ShapeButtons({ canvas, addShape, color, setIsLine, lineRef }) {
   return (

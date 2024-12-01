@@ -45,7 +45,7 @@ function SaveLoad({ canvas }) {
       const reader = new FileReader();
       reader.onload = () => {
         try {
-          console.log(reader.result);
+          // console.log(reader.result);
           const loadedData = JSON.parse(reader.result);
 
           canvas.current.loadFromJSON(loadedData, () => {
@@ -71,8 +71,6 @@ function SaveLoad({ canvas }) {
       <button onClick={saveCanvasAsJSON} className="button">
         💾 Save
       </button>
-
-      {}
       <input
         type="file"
         accept="application/json"

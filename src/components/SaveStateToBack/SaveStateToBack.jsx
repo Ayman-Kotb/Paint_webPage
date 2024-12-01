@@ -34,7 +34,7 @@ function debounce(func, delay) {
 export const handleSave = debounce(({ canvas }) => {
   const canvasJson = canvas.current.toJSON();
   const jsonString = JSON.stringify(canvasJson, null, 2);
-  console.log("Saving canvas state:", canvasJson);
+  // console.log("Saving canvas state:", canvasJson);
   saveCanvasState(jsonString);
 }, 500);
 

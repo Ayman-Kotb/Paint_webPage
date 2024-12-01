@@ -99,11 +99,11 @@ function CanvasComponent({ canvas, setSelectedShape, setProperties }) {
     canvas.current.on("selection:cleared", () => handleSelectionCleared);
   }, [canvas.current]);
   return (
-    <div className="canvasContainer">
+    <>
       <canvas id="canvas" />
       <CanvasAdjust canvas={canvas} />
       <SaveStateToBack />
-    </div>
+    </>
   );
 }
 export default CanvasComponent;

@@ -43,7 +43,7 @@ function UndoRedo({ canvas, setSelectedShape }) {
         return;
       }
       const jsonString = JSON.stringify(data, null, 2);
-      console.log(jsonString);
+      // console.log(jsonString);
       const jsonData = JSON.parse(jsonString);
       canvas.current.loadFromJSON(jsonData, () => {
         canvas.current.renderAll(); // Render the updated canvas state
