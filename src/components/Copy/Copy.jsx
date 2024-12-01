@@ -7,36 +7,35 @@ function Copy({ canvas }) {
     const active = canvas.current.getActiveObject();
 
     if (active) {
-      if (active instanceof fabric.Path) {
-        const jsonRepresentation = active.toObject([
-          "shouldStartDragging",
-          "getActiveControl",
-          "onDragStart",
-          "canDrop",
-        ]); // Include custom properties
+      if (active.type === "path") {//need to be handled differently
 
-        fabric.util.enlivenObjects([jsonRepresentation], ([clonedObject]) => {
-          clonedObject.shouldStartDragging =
-            active.shouldStartDragging || (() => false);
-          clonedObject.getActiveControl =
-            active.getActiveControl || (() => null);
-          clonedObject.onDragStart = active.onDragStart || (() => {});
-          clonedObject.canDrop = active.canDrop || (() => false);
+        // const jsonRepresentation = active.toObject([
+        //   "shouldStartDragging",
+        //   "getActiveControl",
+        //   "onDragStart",
+        //   "canDrop",
+        // ]); // Include custom properties
 
-          Object.assign(clonedObject, {
-            ...active,
-            left: active.left + 10,
-            top: active.top + 10,
-          });
+        // fabric.util.enlivenObjects([jsonRepresentation], ([clonedObject]) => {
+        //   clonedObject.shouldStartDragging =
+        //     active.shouldStartDragging || (() => false);
+        //   clonedObject.getActiveControl =
+        //     active.getActiveControl || (() => null);
+        //   clonedObject.onDragStart = active.onDragStart || (() => {});
+        //   clonedObject.canDrop = active.canDrop || (() => false);
 
-          canvas.current.add(clonedObject);
-          canvas.current.setActiveObject(clonedObject);
+        //   Object.assign(clonedObject, {
+        //     ...active,
+        //     left: active.left + 10,
+        //     top: active.top + 10,
+        //   });
+        //   canvas.current.add(clonedObject);
+        //   canvas.current.setActiveObject(clonedObject);
 
-          handleSave({ canvas });
-          canvas.current.renderAll();
-          console.log(canvas.current.getObjects());
-        });
-        return;
+        //   handleSave({ canvas });
+        //   canvas.current.renderAll();
+        // });
+        // return;
       }
       const clonedShape = protoFac.createShape({
         shape: active.type === "rect" ? "rectangle" : active.type,
@@ -49,10 +48,8 @@ function Copy({ canvas }) {
         strokeWidth: active.get("strokeWidth"),
         fillColor: active.get("fill"),
       });
-
       canvas.current.add(clonedShape);
       canvas.current.setActiveObject(clonedShape);
-
       handleSave({ canvas });
       canvas.current.renderAll();
     }

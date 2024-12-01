@@ -11,32 +11,31 @@ function SaveStateToBack() {
   return <></>;
 }
 
-  // Save the canvas state to the backend
-  async function saveCanvasState(jsonString) {
-    try {
-      await axios.post("http://localhost:8080/api/canvas/save", jsonString, {
-        headers: { "Content-Type": "application/json" },
-      });
-    } catch (error) {
-      console.error("Failed to save canvas state:", error);
-    }
+// Save the canvas state to the backend
+async function saveCanvasState(jsonString) {
+  try {
+    await axios.post("http://localhost:8080/api/canvas/save", jsonString, {
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error("Failed to save canvas state:", error);
   }
-  function debounce(func, delay){
-    let timeOut;
-    return (...args)=>{
-        clearTimeout(timeOut);
-        timeOut = setTimeout(() => {
-            func(...args);
-        }, delay);
-    }
-  }
+}
+function debounce(func, delay) {
+  let timeOut;
+  return (...args) => {
+    clearTimeout(timeOut);
+    timeOut = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+}
 
 export const handleSave = debounce(({ canvas }) => {
-    const canvasJson = canvas.current.toJSON();
-    const jsonString = JSON.stringify(canvasJson, null, 2);
-    console.log("Saving canvas state:", canvasJson);
-    saveCanvasState(jsonString);
-  }, 500); 
-
+  const canvasJson = canvas.current.toJSON();
+  const jsonString = JSON.stringify(canvasJson, null, 2);
+  console.log("Saving canvas state:", canvasJson);
+  saveCanvasState(jsonString);
+}, 500);
 
 export default SaveStateToBack;

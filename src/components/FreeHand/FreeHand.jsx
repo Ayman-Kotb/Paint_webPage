@@ -1,38 +1,38 @@
-import { stopLineDrawingMode } from "../Buttons/Line";
 import { BsBrushFill } from "react-icons/bs";
 import { IoStop } from "react-icons/io5"; // Stop icon
 import { handleSave } from "../SaveStateToBack/SaveStateToBack";
 
-function FreeHand({ canvas, color , size, setSize }) {
-
+function FreeHand({ canvas, color, size, setSize }) {
     const enablePencil = () => {
         if (!canvas.current) return;
-
+    
         // Set up the brush
         const brush = new window.fabric.PencilBrush(canvas.current);
         brush.color = color;
-        brush.width = size ;
+        brush.width = size;
         canvas.current.freeDrawingBrush = brush;
-
+    
         // Enable drawing mode
         canvas.current.isDrawingMode = true;
-        canvas.current.selection=false;
-
+        canvas.current.selection = false;
+    
+        // Disable selection for existing objects while drawing
         canvas.current.forEachObject((obj) => {
             obj.selectable = false;
             obj.evented = false;
         });
+    
         canvas.current.renderAll();
     };
-
+    
     const disablePencil = () => {
         if (!canvas.current) return;
-
-        canvas.current.isDrawingMode = false; // Disable drawing mode
-        canvas.current.selection = true; // Enable selection
+    
+        canvas.current.isDrawingMode = false;
+        canvas.current.selection = true;
         canvas.current.freeDrawingBrush = null;
     
-        // Ensure all objects are properly interactive
+        // Re-enable selection for all objects
         canvas.current.forEachObject((obj) => {
             obj.set({
                 selectable: true,
@@ -42,12 +42,12 @@ function FreeHand({ canvas, color , size, setSize }) {
                 lockScalingX: false,
                 lockScalingY: false,
                 lockRotation: false,
-                lockUniScaling: false,
+                strokeUniform: true
             });
     
-            // Add fallback methods to prevent errors
-            if (!obj.getActiveControl) {
-                obj.getActiveControl = () => null;
+            // Add required methods if they don't exist
+            if (!obj.findControl) {
+                obj.findControl = () => null;
             }
             if (!obj.shouldStartDragging) {
                 obj.shouldStartDragging = () => false;
@@ -55,38 +55,49 @@ function FreeHand({ canvas, color , size, setSize }) {
             if (!obj.onDragStart) {
                 obj.onDragStart = () => {};
             }
+            if (!obj.getActiveControl) {
+                obj.getActiveControl = () => null;
+            }
         });
-        canvas.current.renderAll();
+    
+        const canvasJson = canvas.current.toJSON();
+        canvas.current.loadFromJSON(canvasJson);
+        clearTimeout();
+        setTimeout(() => {
+          canvas.current.renderAll();
+        }, 0);
     };
-
+    
     const handleSizeChange = (e) => {
-        const newSize = e.target.value;
+        const newSize = parseInt(e.target.value, 10);
         setSize(newSize);
-        if (canvas.current.freeDrawingBrush) {
+        if (canvas.current?.freeDrawingBrush) {
             canvas.current.freeDrawingBrush.width = newSize;
-            handleSave({canvas});
             canvas.current.renderAll();
         }
+        handleSave({canvas})
     };
 
     return (
         <div className="container">
-            <button onClick={(enablePencil)} className="button">
-                <BsBrushFill /> {/* Brush icon to start drawing */}
+            <button onClick={enablePencil} className="button">
+                <BsBrushFill />
             </button>
             <button onClick={disablePencil} className="button">
-                <IoStop /> {/* Stop icon to disable drawing */}
+                <IoStop />
             </button>
-            <label htmlFor="brushSize" style={{ fontSize: "20px" }}>Brush Size: </label>
-                <input
-                    id="brushSize"
-                    type="range"
-                    min="1"
-                    max="20"
-                    value={size}
-                    onChange={handleSizeChange}
-                />
-                <span style={{ margin: "10px" , fontSize: "20px"}}>{size}</span> {/* Display the current brush size */}
+            <label htmlFor="brushSize" style={{ fontSize: "20px" }}>
+                Brush Size:{" "}
+            </label>
+            <input
+                id="brushSize"
+                type="range"
+                min="1"
+                max="20"
+                value={size}
+                onChange={handleSizeChange}
+            />
+            <span style={{ margin: "10px", fontSize: "20px" }}>{size}</span>
         </div>
     );
 }
