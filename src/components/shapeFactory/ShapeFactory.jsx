@@ -6,7 +6,7 @@ import Square from "../shapes/Square.jsx";
 import myTriangle from "../shapes/triangle.jsx";
 
 class ShapeFactory {
-    createShape( {shape , color , radius ,rx ,ry,  width ,strokeWidth , height , fillColor , x1 ,y1 ,x2 ,y2 , angle}){
+    createShape( {shape , color , radius ,rx ,ry,  width ,strokeWidth , height , fillColor , x1 ,y1 ,x2 ,y2 , angle , scaleX , scaleY}){
         switch (shape){
             case "circle":
                 if (radius ===0)return new myCircle().create(color)
@@ -15,7 +15,7 @@ class ShapeFactory {
                 if (rx ===0 || ry===0 )return new myEllipse().create(color)
                 else return new myEllipse().create(color ,rx , ry, strokeWidth , fillColor ,angle)
             case "line":
-                return new myLine().create(color, strokeWidth , x1+5, y1+5, x2+5, y2+5 , angle)
+                return new myLine().create(color, strokeWidth , x1+5, y1+5, x2+5, y2+5 , angle , scaleX , scaleY)
             case "rectangle":
                 if (width ===0 || height ===0) return new Rectangle().create(color)
                 else return new Rectangle().create(color, width , height, strokeWidth , fillColor , angle)

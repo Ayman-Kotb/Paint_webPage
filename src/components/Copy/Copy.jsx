@@ -70,6 +70,8 @@ function Copy({ canvas }) {
       y1 : active.get("y1") ,
       y2 : active.get("y2") ,
       angle : active.get("angle"),
+      scaleX: active.get("scaleX"),
+      scaleY: active.get("scaleY"),
     });
 
     // Position the clone with an offset
@@ -141,8 +143,15 @@ function Copy({ canvas }) {
             radius: obj.get("radius") * obj.get("scaleX"),
             rx: obj.get("rx") * obj.get("scaleX"),
             ry: obj.get("ry") * obj.get("scaleY"),
-            strokeWidth: obj.get("strokeWidth"),
+            strokeWidth: obj.get("strokeWidth")*obj.get("scaleX"),
             fillColor: obj.get("fill"),
+            x1 : obj.get("x1") ,
+            x2 : obj.get("x2") ,
+            y1 : obj.get("y1") ,
+            y2 : obj.get("y2") ,
+            angle : obj.get("angle"),
+            scaleX: obj.get("scaleX"),
+            scaleY: obj.get("scaleY"),
           });
 
           // Position the clone with an offset
