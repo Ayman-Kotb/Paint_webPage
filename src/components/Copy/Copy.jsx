@@ -3,57 +3,138 @@ import shapeFactory from "../shapeFactory/ShapeFactory";
 
 function Copy({ canvas }) {
   const protoFac = new shapeFactory();
+
+  const copyPath = (active) => {
+    try {
+      // Get all the path's data
+      const pathData = active.toObject();
+
+      // Create a new path from the original data
+      fabric.Path.fromObject(pathData, (clonedPath) => {
+        // Set new position
+        clonedPath.set({
+          left: active.left + 20,
+          top: active.top + 20,
+          selectable: true,
+          evented: true,
+          hasControls: true,
+          hasBorders: true,
+          lockScalingX: false,
+          lockScalingY: false,
+          lockRotation: false,
+          strokeUniform: true,
+        });
+
+        // Add required methods for path objects
+        if (!clonedPath.findControl) {
+          clonedPath.findControl = () => null;
+        }
+        if (!clonedPath.shouldStartDragging) {
+          clonedPath.shouldStartDragging = () => false;
+        }
+        if (!clonedPath.onDragStart) {
+          clonedPath.onDragStart = () => {};
+        }
+        if (!clonedPath.getActiveControl) {
+          clonedPath.getActiveControl = () => null;
+        }
+        return clonedPath;
+      });
+    } catch (error) {
+      console.error("Error copying path:", error);
+    }
+  };
+
+  const copyShape = (active) => {
+    const clonedShape = protoFac.createShape({
+      shape: active.type === "rect" ? "rectangle" : active.type,
+      color: active.get("stroke"),
+      height: active.get("height") * active.get("scaleY"),
+      width: active.get("width") * active.get("scaleX"),
+      radius: active.get("radius") * active.get("scaleX"),
+      rx: active.get("rx") * active.get("scaleX"),
+      ry: active.get("ry") * active.get("scaleY"),
+      strokeWidth: active.get("strokeWidth"),
+      fillColor: active.get("fill"),
+    });
+
+    // Position the clone with an offset
+    clonedShape.set({
+      left: active.left + 20,
+      top: active.top + 20,
+    });
+    return clonedShape;
+  };
+
+  const copyGroup = async (active) => {
+    try {
+      const clonedObjects = [];
+      const activeObjects = active.getObjects();
+
+      const leftShift = active.left + 100;
+      const topShift = active.top + 100;
+
+      for (const obj of activeObjects) {
+
+        if (obj.type === "path") {
+          // Get the path's data
+          clonedObjects.push(copyPath(obj));
+        } else {
+          clonedObjects.push(copyShape(obj));
+        }
+      }
+      clonedObjects.forEach((obj) =>{
+        obj.set({
+          left: obj.left + leftShift,
+          top: obj.top + topShift,
+        })
+        canvas.current.add(obj);
+      })
+      const canvasJson = canvas.current.toJSON();
+      canvas.current.loadFromJSON(canvasJson);
+      clearTimeout();
+      setTimeout(() => {
+        canvas.current.renderAll();
+      });
+    } catch (error) {
+      console.error("Error copying group:", error);
+    }
+  };
+
   const CopySelected = () => {
     const active = canvas.current.getActiveObject();
 
     if (active) {
-      if (active.type === "path") {//need to be handled differently
+      if (active.type === "activeselection") {
 
-        // const jsonRepresentation = active.toObject([
-        //   "shouldStartDragging",
-        //   "getActiveControl",
-        //   "onDragStart",
-        //   "canDrop",
-        // ]); // Include custom properties
+        copyGroup(active);
+        
+      } else if (active.type === "path") {
 
-        // fabric.util.enlivenObjects([jsonRepresentation], ([clonedObject]) => {
-        //   clonedObject.shouldStartDragging =
-        //     active.shouldStartDragging || (() => false);
-        //   clonedObject.getActiveControl =
-        //     active.getActiveControl || (() => null);
-        //   clonedObject.onDragStart = active.onDragStart || (() => {});
-        //   clonedObject.canDrop = active.canDrop || (() => false);
+        const clonedPath = copyPath(active);
 
-        //   Object.assign(clonedObject, {
-        //     ...active,
-        //     left: active.left + 10,
-        //     top: active.top + 10,
-        //   });
-        //   canvas.current.add(clonedObject);
-        //   canvas.current.setActiveObject(clonedObject);
+        canvas.current.add(clonedPath);
 
-        //   handleSave({ canvas });
-        //   canvas.current.renderAll();
-        // });
-        // return;
+        const canvasJson = canvas.current.toJSON();
+        canvas.current.loadFromJSON(canvasJson);
+
+        clearTimeout();
+        setTimeout(() => {
+          canvas.current.renderAll();
+        }, 0);
+
+      } else {
+        copyShape(active);
+
+        canvas.current.add(clonedShape);
+
+        canvas.current.setActiveObject(clonedShape);
+        canvas.current.renderAll();
       }
-      const clonedShape = protoFac.createShape({
-        shape: active.type === "rect" ? "rectangle" : active.type,
-        color: active.get("stroke"),
-        height: active.get("height") * active.get("scaleY"),
-        width: active.get("width") * active.get("scaleX"),
-        radius: active.get("radius") * active.get("scaleX"),
-        rx : active.get("rx")*active.get("scaleX"),
-        ry : active.get("ry")*active.get("scaleY"),
-        strokeWidth: active.get("strokeWidth"),
-        fillColor: active.get("fill"),
-      });
-      canvas.current.add(clonedShape);
-      canvas.current.setActiveObject(clonedShape);
       handleSave({ canvas });
-      canvas.current.renderAll();
     }
   };
+
   return (
     <div className="container">
       <button className="button" onClick={CopySelected}>
@@ -62,4 +143,5 @@ function Copy({ canvas }) {
     </div>
   );
 }
+
 export default Copy;
