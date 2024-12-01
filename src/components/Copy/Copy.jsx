@@ -38,7 +38,16 @@ function Copy({ canvas }) {
         if (!clonedPath.getActiveControl) {
           clonedPath.getActiveControl = () => null;
         }
-        return clonedPath;
+
+        canvas.current.add(clonedPath);
+        const canvasJson = canvas.current.toJSON();
+        canvas.current.loadFromJSON(canvasJson);
+        clearTimeout();
+        setTimeout(() => {
+          canvas.current.renderAll();
+        }, 0);
+        handleSave({ canvas });
+        canvas.current.renderAll();
       });
     } catch (error) {
       console.error("Error copying path:", error);
@@ -63,7 +72,11 @@ function Copy({ canvas }) {
       left: active.left + 20,
       top: active.top + 20,
     });
-    return clonedShape;
+
+    canvas.current.add(clonedShape);
+    canvas.current.setActiveObject(clonedShape);
+    handleSave({ canvas });
+    canvas.current.renderAll();
   };
 
   const copyGroup = async (active) => {
@@ -71,31 +84,82 @@ function Copy({ canvas }) {
       const clonedObjects = [];
       const activeObjects = active.getObjects();
 
-      const leftShift = active.left + 100;
-      const topShift = active.top + 100;
+      const groupLeft = active.left || 0;
+      const groupTop = active.top || 0;
 
       for (const obj of activeObjects) {
+        const relativeLeft = obj.left - groupLeft;
+        const relativeTop = obj.top - groupTop;
 
         if (obj.type === "path") {
           // Get the path's data
-          clonedObjects.push(copyPath(obj));
+          const pathData = obj.toObject();
+
+          await new Promise((resolve) => {
+            fabric.Path.fromObject(pathData, (clonedPath) => {
+              clonedPath.set({
+                left: relativeLeft + groupLeft + 200,
+                top: relativeTop + groupTop + 200,
+                selectable: true,
+                evented: true,
+                hasControls: true,
+                hasBorders: true,
+                lockScalingX: false,
+                lockScalingY: false,
+                lockRotation: false,
+                strokeUniform: true,
+              });
+
+              if (!clonedPath.findControl) {
+                clonedPath.findControl = () => null;
+              }
+              if (!clonedPath.shouldStartDragging) {
+                clonedPath.shouldStartDragging = () => false;
+              }
+              if (!clonedPath.onDragStart) {
+                clonedPath.onDragStart = () => {};
+              }
+              if (!clonedPath.getActiveControl) {
+                clonedPath.getActiveControl = () => null;
+              }
+
+              clonedObjects.push(clonedPath);
+              resolve();
+            });
+          });
         } else {
-          clonedObjects.push(copyShape(obj));
+          const clonedShape = protoFac.createShape({
+            shape: obj.type === "rect" ? "rectangle" : obj.type,
+            color: obj.get("stroke"),
+            height: obj.get("height") * obj.get("scaleY"),
+            width: obj.get("width") * obj.get("scaleX"),
+            radius: obj.get("radius") * obj.get("scaleX"),
+            rx: obj.get("rx") * obj.get("scaleX"),
+            ry: obj.get("ry") * obj.get("scaleY"),
+            strokeWidth: obj.get("strokeWidth"),
+            fillColor: obj.get("fill"),
+          });
+
+          // Position the clone with an offset
+          clonedShape.set({
+            left: groupLeft + relativeLeft + 200,
+            top: groupTop + relativeTop + 200,
+          });
+
+          clonedObjects.push(clonedShape);
         }
       }
-      clonedObjects.forEach((obj) =>{
-        obj.set({
-          left: obj.left + leftShift,
-          top: obj.top + topShift,
-        })
+
+      clonedObjects.forEach((obj) => {
         canvas.current.add(obj);
-      })
+      });
       const canvasJson = canvas.current.toJSON();
       canvas.current.loadFromJSON(canvasJson);
       clearTimeout();
       setTimeout(() => {
         canvas.current.renderAll();
-      });
+      }, 0);
+      handleSave({ canvas });
     } catch (error) {
       console.error("Error copying group:", error);
     }
@@ -106,32 +170,12 @@ function Copy({ canvas }) {
 
     if (active) {
       if (active.type === "activeselection") {
-
         copyGroup(active);
-        
       } else if (active.type === "path") {
-
-        const clonedPath = copyPath(active);
-
-        canvas.current.add(clonedPath);
-
-        const canvasJson = canvas.current.toJSON();
-        canvas.current.loadFromJSON(canvasJson);
-
-        clearTimeout();
-        setTimeout(() => {
-          canvas.current.renderAll();
-        }, 0);
-
+        copyPath(active);
       } else {
         copyShape(active);
-
-        canvas.current.add(clonedShape);
-
-        canvas.current.setActiveObject(clonedShape);
-        canvas.current.renderAll();
       }
-      handleSave({ canvas });
     }
   };
 
