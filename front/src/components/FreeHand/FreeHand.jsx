@@ -86,7 +86,7 @@ function FreeHand({ canvas, color, size, setSize }) {
             <button onClick={disablePencil} className="button">
                 <IoStop />
             </button>
-            <label htmlFor="brushSize" style={{ fontSize: "20px" }}>
+            <label htmlFor="brushSize" style={{ fontSize: "20px" , color:"#4b5563" }}>
                 Brush Size:{" "}
             </label>
             <input
@@ -97,7 +97,7 @@ function FreeHand({ canvas, color, size, setSize }) {
                 value={size}
                 onChange={handleSizeChange}
             />
-            <span style={{ margin: "10px", fontSize: "20px" }}>{size}</span>
+            <span style={{ margin: "10px", fontSize: "20px" , color:"#4b5563"}}>{size}</span>
         </div>
     );
 }

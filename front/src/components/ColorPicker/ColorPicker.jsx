@@ -24,8 +24,8 @@ function ColorPicker({ color, setColor, canvas}) {
     }
 
     return (
-        <div className="container">
-            <p>Pick a color:</p>
+        <div className="container" >
+            <p style={ {color:"#4b5563"}}>Pick a color:</p>
             <input
                 type="color"
                 value={color} // Use the color prop here

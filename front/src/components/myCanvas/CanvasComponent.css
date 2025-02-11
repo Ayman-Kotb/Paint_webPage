@@ -1,37 +1,76 @@
-#canvas{
-    margin: 50px;
-    border: 2px solid black;
-    border-radius: 40px;
-    background-color: white;
-    z-index: 2;
-}
-
-.canvasAdjustSize{
-    border: 1px solid rgb(0, 0, 0);
-    color: black;
-    border-radius: 10px;
-    background-color: hsla(173, 100%, 67%, 0.333);
-    padding: 10px;
-    gap: 30px;
+#canvas {
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    margin: 2rem auto;
+    /* margin-left: 1rem ;  دي المسئولة عن القلم و بتزود المسافة ...اي سي اس اس  على الكانفاس عموما بيبعد القلم على حسب التأثير بتاع السي اس اس .. هو حاليا القلم تمام*/  
+    display: block;
+    /* max-width: calc(100% - 4rem); */
+    cursor: crosshair;
+  }
+  
+  .canvasAdjustSize {
     position:fixed;
-    top: 20%;
-    right: 0;
-    width: 220px;
-    height: 180px;
-}
-
-.canvasAdjustSize p{
-    font-size: 25px;
-    margin: 5px 0px 30px 0px;
-    background-color: hsla(168, 31%, 87%, 0.77);
+    top: 18.25%;
+    right: 1rem;
+    background: #ffffff;
     border-radius: 20px;
-    padding: 12px;
-}
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    animation: slideIn 0.3s ease;
+  }
+  
+  .canvasAdjustSize p {
+    font-size: 1.25rem;
+    color: #1f2937;
+    margin: 0 0 1rem 0;
+    padding: 0.75rem;
+    background: #f3f4f6;
+    border-radius: 12px;
+    text-align: center;
+  }
+  
+  .canvasAdjustSize label {
+    color: #4b5563;
+    font-size: 20px;
+    
+    display: block;
+  }
+  
+  input[type="range"] {
+    width: 100%;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    appearance: none;
 
-.canvasAdjustSize label{
-    color: rgb(255, 255, 255);
-}
-
-.lower-canvas{
-    position: initial !important;
-}
+  }
+  
+  input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #3b82f6;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
