@@ -20,7 +20,7 @@ function MenuBar({ canvas, selectedShape, setSelectedShape, properties, setPrope
             <FreeHand canvas={canvas} color={color} size={size} setSize={setSize} /> {/* Pass size to FreeHand */}  
             <SaveLoad canvas={canvas}/>
             <Copy canvas={canvas}/>
-            <Delete canvas={canvas} />
+            <Delete canvas={canvas} setSelectedShape={setSelectedShape} />
             <UndoRedo canvas={canvas} setSelectedShape={setSelectedShape}/>
             
         </div>

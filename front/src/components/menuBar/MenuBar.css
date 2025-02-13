@@ -5,9 +5,10 @@
   display: flex;
   gap: 1rem;
   align-items: center;
-  margin: 1rem;
+  margin-right: 1rem;
+  /* margin-left: 1rem; */
   position: sticky;
-  top: 1rem;
+  top: 10px;
   z-index: 100;
 }
 
@@ -77,20 +78,23 @@
   position: fixed;
   z-index: 3;
   right: 10px;
-  top: 56%;
+  top: 55%;
   color: #4b5563;
   border: 2px solid #222;
   border-radius: 20px;
   background: rgb(255, 255, 255);
   padding: 15px;
-  width: 280px;
+  width: 290px;
   height: auto;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 .toolbox p {
   font-size: 20px;
+  text-align: center;
   background: #f3f4f6;
-  color: #4b5563;
+  color: #1f2937;
+  margin-bottom: 1rem;
+  margin-top: 0rem ;
   border-radius: 10px;
   padding: 8px;
 }

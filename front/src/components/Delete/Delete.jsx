@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { handleSave } from "../SaveStateToBack/SaveStateToBack";
 
-function Delete({ canvas }) {
+function Delete({ canvas , setSelectedShape }) {
   const deleteSelected = () => {
     if (!canvas.current) return;
 
@@ -13,6 +13,7 @@ function Delete({ canvas }) {
       activeObj.forEach((obj) => {
         // Remove from canvas
         canvas.current.remove(obj);
+        setSelectedShape(null);
         // Explicitly dispose of the object
         if (obj.dispose) {
           obj.dispose();

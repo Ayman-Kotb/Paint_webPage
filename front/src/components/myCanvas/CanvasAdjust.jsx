@@ -21,18 +21,7 @@ function CanvasAdjust({ canvas }) {
         <div className="canvasContainer">
             <div className="canvasAdjustSize">
                 <p>Change canvas size</p>
-                <label>height: </label>
-                <input 
-                    type="range"
-                    min="100" 
-                    max="700" 
-                    step="1" 
-                    value={height} 
-                    onChange={(e)=>changeHeight(e)}
-                />
-                <label>{height}</label>
-                <br/><br/>
-                <label>width: </label>
+                <label>Width: </label>
                 <input 
                     type="range"
                     min="100" 
@@ -42,6 +31,18 @@ function CanvasAdjust({ canvas }) {
                     onChange={(e)=>changeWidth(e)}
                 />
                 <label> {width}</label>
+                <br/><br/>
+                <label>Height: </label>
+                <input 
+                    type="range"
+                    min="100" 
+                    max="700" 
+                    step="1" 
+                    value={height} 
+                    onChange={(e)=>changeHeight(e)}
+                />
+                <label>{height}</label>
+                
             </div>
         </div>
     )
