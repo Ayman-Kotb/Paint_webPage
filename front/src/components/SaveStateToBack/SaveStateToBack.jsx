@@ -4,7 +4,7 @@ import { useEffect } from "react";
 function SaveStateToBack() {
   useEffect(() => {
     async function clearHistory() {
-      await axios.delete("http://localhost:8080/api/canvas/clearHistory");
+      await axios.delete("https://paintback-production.up.railway.app/api/canvas/clearHistory");
     }
     clearHistory();
   }, []);
@@ -14,7 +14,7 @@ function SaveStateToBack() {
 // Save the canvas state to the backend
 async function saveCanvasState(jsonString) {
   try {
-    await axios.post("http://localhost:8080/api/canvas/save", jsonString, {
+    await axios.post("https://paintback-production.up.railway.app/api/canvas/save", jsonString, {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
