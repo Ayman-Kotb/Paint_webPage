@@ -6,7 +6,7 @@ function UndoRedo({ canvas, setSelectedShape }) {
   async function undo() {
     try {
       setSelectedShape(null);
-      const response = await axios.get('http://localhost:8080/api/canvas/undo');
+      const response = await axios.get('https://paintback-production.up.railway.app/api/canvas/undo');
       const data = response.data;
 
       if (data.error) {
@@ -35,7 +35,7 @@ function UndoRedo({ canvas, setSelectedShape }) {
   async function redo() {
     try {
       setSelectedShape(null);
-      const response = await axios.get('http://localhost:8080/api/canvas/redo');
+      const response = await axios.get('https://paintback-production.up.railway.app/api/canvas/redo');
       const data = response.data;
 
       if (data.error) {
