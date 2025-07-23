@@ -6,6 +6,7 @@ import com.paint.paintBack.Memento.History;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "https://paint-web-page.vercel.app")
 @RequestMapping("/api/canvas")
 public class CanvasController {
     private final Editor editor = new Editor();
