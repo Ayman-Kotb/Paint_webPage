@@ -10,12 +10,14 @@ public class WebConfig {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")
-                        .allowedOrigins("https://paint-web-page.vercel.app")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
-            }
+             @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+            .allowedOrigins("https://paint-web-page.vercel.app") // ✅ REPLACE THIS!
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+            .allowedHeaders("*")
+            .allowCredentials(true);
+    }
         };
     }
 }
